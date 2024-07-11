@@ -1,6 +1,39 @@
 from django.db import models
 from django.contrib.auth import models as auth_models
 
+class UserManager(auth_models.BaseUserManager):
+
+    def create_user(self, username: str, email: str, password: str = None, is_superuser=False) -> "User":
+        if not email:
+            raise ValueError("User must have an email")
+        if not username:
+            raise ValueError("User must have username")
+        
+        user = self.model(email=self.normalize_email(email))
+        user.username = username
+        user.set_password(password)
+        user.is_active = True
+        user.is_superuser = is_superuser
+        user.save()
+
+        return user
+    
+    def create_superuser(self, username: str, email: str, password: str = None) -> "User":
+        user = self.create_superuser(
+            username=username,
+            email=email,
+            password=password,
+            is_superuser=True
+        )
+        user.save()
+
+        return user
+
 class User(auth_models.AbstractUser):
-    first_name = models.CharField(max_length=150)
-    last_name = models.CharField(max_length=150)
+    username = models.CharField(max_length=150)
+    email = models.EmailField(max_length=255, unique=True)
+    password = models.CharField(max_length=255)
+
+    objects = UserManager()
+
+    REQUIRED_FIELDS = ["username",]
