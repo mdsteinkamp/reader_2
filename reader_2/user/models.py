@@ -19,7 +19,7 @@ class UserManager(auth_models.BaseUserManager):
         return user
     
     def create_superuser(self, username: str, email: str, password: str = None) -> "User":
-        user = self.create_superuser(
+        user = self.create_user(
             username=username,
             email=email,
             password=password,
