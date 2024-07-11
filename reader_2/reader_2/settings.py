@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'reader_2.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'reader_database', #change it databasename
+        'USER': 'matthewsteinkamp', #change it database user name
+        'PASSWORD': '1234', # change user database password
+        'HOST': 'localhost',  
+        'PORT': '5432',           
     }
 }
 
