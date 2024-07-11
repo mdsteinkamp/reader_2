@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'reader_2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'reader_database', #change it databasename
+        'NAME': 'reader_2_db', #change it databasename
         'USER': 'matthewsteinkamp', #change it database user name
         'PASSWORD': '1234', # change user database password
         'HOST': 'localhost',  
