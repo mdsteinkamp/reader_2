@@ -3,7 +3,7 @@ from django.contrib.auth import models as auth_models
 
 class UserManager(auth_models.BaseUserManager):
 
-    def create_user(self, username: str, email: str, password: str = None, is_superuser=False) -> "User":
+    def create_user(self, username: str, email: str, password: str = None, is_staff=False, is_superuser=False) -> "User":
         if not email:
             raise ValueError("User must have an email")
         if not username:
@@ -13,6 +13,7 @@ class UserManager(auth_models.BaseUserManager):
         user.username = username
         user.set_password(password)
         user.is_active = True
+        user.is_staff = is_staff
         user.is_superuser = is_superuser
         user.save()
 
@@ -23,6 +24,7 @@ class UserManager(auth_models.BaseUserManager):
             username=username,
             email=email,
             password=password,
+            is_staff=True,
             is_superuser=True
         )
         user.save()
