@@ -50,6 +50,6 @@ def create_token(user_id: int) -> str:
         iat=datetime.datetime.now(datetime.UTC)
     )
 
-    token = jwt.encode(payload, settings.JWT_SECRET, algorithm="HS256")
+    token = jwt.encode(payload, settings.JWT_SECRET, algorithm="HS256").decode("utf-8")
 
     return token

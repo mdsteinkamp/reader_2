@@ -1,7 +1,7 @@
 from rest_framework import views, response, exceptions, permissions
 
 from . import serializers as user_serializer
-from . import services
+from . import services, authentication
 from . import models
 
 class RegisterApi(views.APIView):
@@ -43,8 +43,12 @@ class LoginApi(views.APIView):
         return resp
     
 class UserApi(views.APIView):
-    authentication_classes = ()
-    permission_classes = ()
+    authentication_classes = (authentication.CustomUserAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    """
+    comment
+    """
 
     def get(self, request):
         user = request.user
