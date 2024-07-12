@@ -14,4 +14,21 @@ class RegisterApi(views.APIView):
 
         print(data)
 
-        return response.Response(data={"hello": "world"})
+        return response.Response(data=serializer.data)
+    
+class LoginApi(views.APIView):
+
+    def post(self, request):
+        username = request.data("username")
+        email = request.data("email")
+        password = request.data("password")
+
+        user = services.user_email_selector(email=email)
+
+        if user is None:
+            raise exceptions.AuthenticationFailed("Invalid Credentials")
+        
+        if not user.check_password(raw_password=password):
+            raise exceptions.AuthenticationFailed("Invalid Credentials")
+        
+        

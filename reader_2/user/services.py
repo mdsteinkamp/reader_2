@@ -33,3 +33,9 @@ def create_user(user_dc: "UserDataClass") -> "UserDataClass":
     instance.save()
 
     return UserDataClass.from_instance(instance)
+
+def user_email_selector(email: str) -> "User":
+    user = models.User.objects.filter(email=email).first()
+
+    return user
+
