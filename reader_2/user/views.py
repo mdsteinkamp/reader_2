@@ -1,6 +1,7 @@
 from rest_framework import views, response, exceptions, permissions
 
 from . import serializers as user_serializer
+from . import services
 
 class RegisterApi(views.APIView):
 
@@ -9,6 +10,7 @@ class RegisterApi(views.APIView):
         serializer.is_valid(raise_exception=True)
 
         data = serializer.validated_data
+        serializer.instance = services.create_user(user_dc=data)
 
         print(data)
 
