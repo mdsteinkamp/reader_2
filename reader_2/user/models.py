@@ -37,3 +37,6 @@ class User(auth_models.AbstractUser):
     password = models.CharField(max_length=255)
 
     objects = UserManager()
+
+    def __str__(self):
+        return self.username
