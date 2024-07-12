@@ -1,6 +1,10 @@
 import dataclasses
+import datetime
+import jwt
 
 from typing import TYPE_CHECKING
+
+from django.conf import settings
 
 from . import models
 
@@ -39,3 +43,13 @@ def user_email_selector(email: str) -> "User":
 
     return user
 
+def create_token(user_id: int) -> str:
+    payload = dict(
+        id=user_id,
+        exp=datetime.datetime.now(datetime.UTC) + datetime.timedelta(hours=24),
+        iat=datetime.datetime.now(datetime.UTC)
+    )
+
+    token = jwt.encode(payload, settings.JWT_SECRET, algorithm="HS256")
+
+    return token

@@ -2,6 +2,7 @@ from rest_framework import views, response, exceptions, permissions
 
 from . import serializers as user_serializer
 from . import services
+from . import models
 
 class RegisterApi(views.APIView):
 
@@ -19,11 +20,13 @@ class RegisterApi(views.APIView):
 class LoginApi(views.APIView):
 
     def post(self, request):
-        username = request.data("username")
-        email = request.data("email")
-        password = request.data("password")
+        print(request)
+        username = request.data["username"]
+        password = request.data["password"]
 
-        user = services.user_email_selector(email=email)
+        # user = services.user_email_selector(email=email)
+        user = models.User.objects.filter(username=username).first()
+
 
         if user is None:
             raise exceptions.AuthenticationFailed("Invalid Credentials")
@@ -31,4 +34,10 @@ class LoginApi(views.APIView):
         if not user.check_password(raw_password=password):
             raise exceptions.AuthenticationFailed("Invalid Credentials")
         
-        
+        token = services.create_token(user_id=user.id)
+
+        resp = response.Response()
+
+        resp.set_cookie(key='jwt', value=token, httponly=True)
+
+        return resp
