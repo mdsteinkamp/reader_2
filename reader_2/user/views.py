@@ -41,3 +41,14 @@ class LoginApi(views.APIView):
         resp.set_cookie(key='jwt', value=token, httponly=True)
 
         return resp
+    
+class UserApi(views.APIView):
+    authentication_classes = ()
+    permission_classes = ()
+
+    def get(self, request):
+        user = request.user
+
+        serializer = user_serializer.UserSerializer(user)
+
+        return response.Response(serializer.data)
