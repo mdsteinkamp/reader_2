@@ -1,3 +1,13 @@
-from django.shortcuts import render
+from rest_framework import views, response, permissions
 
-# Create your views here.
+from user import authentication
+
+class BookCreateListApi(views.APIView):
+    authentication_classes = (authentication.CustomUserAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        pass
+
+    def get(self, request):
+        pass
