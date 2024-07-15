@@ -67,5 +67,3 @@ class LogoutAPI(views.APIView):
         resp.data = {"message": "see ya!"}
 
         return resp
-    
-    
