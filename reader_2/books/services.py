@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from user import services as user_services
 
 if TYPE_CHECKING:
-    from models import Status
+    from models import Book
 
 @dataclasses.dataclass
 class BookDataClass:
