@@ -30,4 +30,4 @@ def create_book(user, book: "BookDataClass") -> "BookDataClass":
         user=user,
     )
 
-    return BookDataClass.from_instance(book_models=create_book)
+    return BookDataClass.from_instance(book_model=create_book)

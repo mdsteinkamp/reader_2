@@ -1,0 +1,9 @@
+{
+    "username": "ryan",
+    "email": "ryan@gmail.com",
+    "password": "1234"
+}
+
+{
+    "title": "LOTR"
+}
