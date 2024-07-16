@@ -20,4 +20,21 @@ class BookCreateListApi(views.APIView):
         return response.Response(data=serializer.data)
 
     def get(self, request):
-        return response.Response(data="hello")
+        book_collection = services.get_user_books(user=request.user)
+        serializer = book_serializer.BookSerializer(book_collection, many=True)
+        return response.Response(data=serializer.data)
+    
+class BookRetrieveUpdateDelete(views.APIView):
+    authentication_classes = (authentication.CustomUserAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, book_id):
+        book = services.get_user_book_detail(user=request.user, book_id=book_id)
+        serializer = book_serializer.BookSerializer(book)
+        return response.Response(data=serializer.data)
+    
+    def delete(self, request, status_id):
+        pass
+
+    def put(self, request, status_id):
+        pass

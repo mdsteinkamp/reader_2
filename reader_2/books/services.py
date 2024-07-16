@@ -2,11 +2,14 @@ import dataclasses
 import datetime
 from typing import TYPE_CHECKING
 
+from django.shortcuts import get_object_or_404
+
 from user import services as user_services
 from . import models as book_models
 
 if TYPE_CHECKING:
     from models import Book
+    from user.models import User
 
 @dataclasses.dataclass
 class BookDataClass:
@@ -31,3 +34,13 @@ def create_book(user, book: "BookDataClass") -> "BookDataClass":
     )
 
     return BookDataClass.from_instance(book_model=create_book)
+
+def get_user_books(user: "User") -> list["BookDataClass"]:
+    user_books = book_models.Book.objects.filter(user=user)
+    
+    return [BookDataClass.from_instance(book) for book in user_books]
+
+def get_user_book_detail(user: "User", book_id: int) -> "BookDataClass":
+    book = get_object_or_404(book_models.Book, pk=book_id)
+
+    return BookDataClass.from_instance(book_model=book)
