@@ -1,6 +1,7 @@
 import dataclasses
 import datetime
 from typing import TYPE_CHECKING
+from rest_framework import exceptions
 
 from django.shortcuts import get_object_or_404
 
@@ -40,7 +41,25 @@ def get_user_books(user: "User") -> list["BookDataClass"]:
     
     return [BookDataClass.from_instance(book) for book in user_books]
 
-def get_user_book_detail(user: "User", book_id: int) -> "BookDataClass":
+def get_user_book_detail(book_id: int) -> "BookDataClass":
     book = get_object_or_404(book_models.Book, pk=book_id)
 
+    return BookDataClass.from_instance(book_model=book)
+
+def delete_book(user: "User", book_id: int) -> "BookDataClass":
+    book = get_object_or_404(book_models.Book, pk=book_id)
+
+    if user.id != book.user.id:
+        raise exceptions.PermissionDenied("You're not the user")
+
+    book.delete()
+
+def update_book(user: "User", book_id: int, book_data: "BookDataClass") -> "BookDataClass":
+    book = get_object_or_404(book_models.Book, pk=book_id)
+
+    if user.id != book.user.id:
+        raise exceptions.PermissionDenied("You're not the user")
+
+    book.title = book_data.title
+    book.save()
     return BookDataClass.from_instance(book_model=book)

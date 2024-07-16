@@ -1,4 +1,4 @@
-from rest_framework import views, response, permissions
+from rest_framework import views, response, permissions, status as rest_status
 
 from . import serializers as book_serializer
 from . import services
@@ -29,12 +29,18 @@ class BookRetrieveUpdateDelete(views.APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, book_id):
-        book = services.get_user_book_detail(user=request.user, book_id=book_id)
+        book = services.get_user_book_detail(book_id=book_id)
         serializer = book_serializer.BookSerializer(book)
         return response.Response(data=serializer.data)
     
-    def delete(self, request, status_id):
-        pass
+    def delete(self, request, book_id):
+        services.delete_book(user=request.user, book_id=book_id)
+        return response.Response(data=rest_status.HTTP_204_NO_CONTENT)
 
-    def put(self, request, status_id):
-        pass
+    def put(self, request, book_id):
+        serializer = book_serializer.BookSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        book = serializer.validated_data
+        serializer.instance = services.update_book(user=request.user, book_id=book_id, book_data=book)
+
+        return response.Response(data=serializer.data)
