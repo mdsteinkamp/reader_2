@@ -7,6 +7,7 @@ from . import models
 class CustomUserAuthentication(authentication.BaseAuthentication):
 
     def authenticate(self, request):
+        # print(request.COOKIES)
         token = request.COOKIES.get("jwt")
         print(token)
 

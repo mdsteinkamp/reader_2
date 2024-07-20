@@ -5,22 +5,22 @@ const UserContext = createContext()
 
 function UserProvider({ children }) {
     const [user, setUser] = useState(null)
-    const [jwt, setJwt] = useState("")
+    const [jwt, setJwt] = useState(localStorage.getItem("jwt"))
 
     const jwtSecret = 'dontkeepthisinsettingsinfuture'
     
-    console.log(localStorage.getItem("token"))
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("jwt")
     console.log(token)
 
     // useEffect(() => {
     //     setJwt(jwtDecode(token))
-    // }, [])
+    // }, [token])
 
     useEffect(() => {
         fetch("/api/me/", {
+            method: "POST",
             headers: {
-                "Authorization": token
+                Authorization: `Bearer ${token}`
             }
         }).then((resp) => {
             if (resp.ok) {

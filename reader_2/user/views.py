@@ -41,7 +41,7 @@ class LoginApi(views.APIView):
         resp = response.Response(serializer.data)
 
         resp.set_cookie(key='jwt', value=token, httponly=True)
-        resp["token"] = token
+        resp["jwt"] = token
         print(resp.headers)
 
         return resp
