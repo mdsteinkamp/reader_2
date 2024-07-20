@@ -3,10 +3,12 @@ import { useState, useEffect, createContext } from "react";
 const UserContext = createContext()
 
 function UserProvider({ children }) {
+
+    console.log(localStorage.getItem("token"))
     const [user, setUser] = useState(null)
 
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/api/me/").then((resp) => {
+        fetch("/api/me/").then((resp) => {
             if (resp.ok) {
                 resp.json().then((user) => console.log(user))
             } else {
