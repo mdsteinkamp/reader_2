@@ -3,12 +3,17 @@ import { useState, useEffect, createContext } from "react";
 const UserContext = createContext()
 
 function UserProvider({ children }) {
-
-    console.log(localStorage.getItem("token"))
     const [user, setUser] = useState(null)
+    
+    console.log(localStorage.getItem("token"))
+    const token = localStorage.getItem("token")
 
     useEffect(() => {
-        fetch("/api/me/").then((resp) => {
+        fetch("/api/me/", {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }).then((resp) => {
             if (resp.ok) {
                 resp.json().then((user) => console.log(user))
             } else {
