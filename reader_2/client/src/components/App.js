@@ -5,7 +5,7 @@ import { UserContext } from "./UserContext"
 function App() {
   const [formData, setFormData]  = useState({username: "", password: ""})
   const [errors, setErrors] = useState([])
-  const [token, setToken] = useState([])
+  const [token, setToken] = useState(localStorage.getItem("token"))
 
   function handleChange(e) {
     const name = e.target.name
@@ -32,7 +32,7 @@ function App() {
         console.log((Array.from(resp.headers.entries())))
         const tokenArray = Array.from(resp.headers.entries().filter(h => h[0] === "token"))
         setToken((Array.from(resp.headers.entries().filter(h => h[0] === "token")))[0][1])
-        localStorage.setItem("token", tokenArray.pop()[1])
+        // localStorage.setItem("token", tokenArray.pop()[1])
         // console.log(resp.headers.entries().filter(header => header[0] === "token"))
         resp.json().then((user) => {
           console.log(user)
@@ -47,9 +47,9 @@ function App() {
 
   console.log(token)
 
-  useEffect(() => {
-    localStorage.setItem('token', token)
-  })
+ 
+  localStorage.setItem('token', token)
+  
 
 
   return (
