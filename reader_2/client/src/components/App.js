@@ -46,6 +46,7 @@ function App() {
   }
 
   localStorage.setItem('jwt', token)
+  console.log(token)
   
 
 

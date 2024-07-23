@@ -18,7 +18,7 @@ function UserProvider({ children }) {
 
     useEffect(() => {
         fetch("/api/me/", {
-            method: "POST",
+            method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`
             }
