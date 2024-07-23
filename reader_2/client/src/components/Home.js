@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import BookList from "./BookList"
 
 export default function Home() {
     const [books, setBooks] = useState([])
@@ -7,7 +8,6 @@ export default function Home() {
         try {
             const response = await fetch("/api/books")
             const books = await response.json()
-            console.log(books)
             setBooks(books)
         } catch(error) {
             console.log(error)
@@ -21,6 +21,7 @@ export default function Home() {
     return (
         <div className="App">
           <h1>My books</h1>
+          <BookList books={books} />
 
         </div>
       )
