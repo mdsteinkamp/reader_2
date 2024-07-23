@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, UseContext } from 'react';
+import { Route, Routes, NavLink } from 'react-router-dom'
+import { UserContext } from './UserContext';
 import '../App.css';
-import { UserContext } from "./UserContext"
+import Login from './Login';
+import Logout from './Logout';
 
 function App() {
   const [formData, setFormData]  = useState({username: "", password: ""})
@@ -52,24 +55,14 @@ function App() {
 
   return (
     <div className="App">
-      <h1>sign in</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          placeholder='Username'
-          value={formData.username}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder='Password'
-          value={formData.password}
-          onChange={handleChange}
-        />
-        <button>Submit</button>
-      </form>
+      <NavLink to="/">Home</NavLink>
+      <NavLink to="/login">Login</NavLink>
+      <NavLink to="/logout">Logout</NavLink>
+
+      <Routes>
+        <Route path="/login" element={<Login />}/>
+        <Route path="/logout" element={<Logout />}/>
+      </Routes>
     </div>
   );
 }
