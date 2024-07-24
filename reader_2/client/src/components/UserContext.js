@@ -24,7 +24,7 @@ function UserProvider({ children }) {
             }
         }).then((resp) => {
             if (resp.ok) {
-                resp.json().then((user) => console.log(user))
+                resp.json().then((user) => setUser(user))
             } else {
                 console.log(resp)
             }
