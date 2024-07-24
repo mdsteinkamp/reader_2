@@ -34,21 +34,21 @@ class LoginApi(views.APIView):
         if not user.check_password(raw_password=password):
             raise exceptions.AuthenticationFailed("Invalid Credentials")
         
+        serializer = user_serializer.UserSerializer(user)
+        
         token = services.create_token(user_id=user.id)
 
-        resp = response.Response()
+        resp = response.Response(serializer.data)
 
         resp.set_cookie(key='jwt', value=token, httponly=True)
+        resp["jwt"] = token
+        print(resp.headers)
 
         return resp
     
 class UserApi(views.APIView):
     authentication_classes = (authentication.CustomUserAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
-
-    """
-    comment
-    """
 
     def get(self, request):
         user = request.user

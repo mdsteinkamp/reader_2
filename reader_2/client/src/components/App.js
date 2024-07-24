@@ -1,66 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useState, UseContext, useContext } from 'react';
+import { Route, Routes, NavLink } from 'react-router-dom'
+import { UserContext } from './UserContext';
 import '../App.css';
-import { UserContext } from "./UserContext"
+import Login from './Login';
+import Logout from './Logout';
+import Home from './Home';
 
 function App() {
-  const [formData, setFormData]  = useState({username: "", password: ""})
-  const [errors, setErrors] = useState([])
+  // const [formData, setFormData]  = useState({username: "", password: ""})
+  // const [errors, setErrors] = useState([])
+  // const [token, setToken] = useState(localStorage.getItem("jwt"))
+  const {user} = useContext(UserContext)
 
-  function handleChange(e) {
-    const name = e.target.name
-    const value = e.target.value
-    setFormData({
-      ...formData,
-      [name]: value
-    })
-  }
+  console.log(user)
 
-  function handleSubmit(e) {
-    e.preventDefault()
-    console.log(formData)
-    fetch("/api/login/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-      credentials: "include",
-    })
-    .then((resp) => {
-      if (resp.ok) {
-        console.log((Array.from(resp.headers.entries().filter(h => h[0] === "token"))))
-        // console.log(resp.headers.entries().filter(header => header[0] === "token"))
-        resp.json().then((user) => {
-          console.log(user)
-      })} else {
-        resp.json().then(e => {
-          setErrors(e.errors)
-          console.log(errors)
-        })
-      }
-    })
-  }
+
+
 
   return (
     <div className="App">
-      <h1>sign in</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          placeholder='Username'
-          value={formData.username}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder='Password'
-          value={formData.password}
-          onChange={handleChange}
-        />
-        <button>Submit</button>
-      </form>
+      <NavLink to="/">Home</NavLink>
+      <NavLink to="/login">Login</NavLink>
+      <NavLink to="/logout">Logout</NavLink>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />}/>
+        <Route path="/logout" element={<Logout />}/>
+      </Routes>
     </div>
   );
 }
