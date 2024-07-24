@@ -15,6 +15,7 @@ if TYPE_CHECKING:
 @dataclasses.dataclass
 class BookDataClass:
     title: str
+    completed: bool
     created_at: datetime.datetime = None
     user: user_services.UserDataClass = None
     id: int = None
@@ -25,19 +26,21 @@ class BookDataClass:
             title=book_model.title,
             created_at=book_model.created_at,
             id=book_model.id,
+            completed=book_model.completed,
             user=book_model.user
         )
     
 def create_book(user, book: "BookDataClass") -> "BookDataClass":
     create_book = book_models.Book.objects.create(
         title=book.title,
+        completed=book.completed,
         user=user,
     )
 
     return BookDataClass.from_instance(book_model=create_book)
 
 def get_user_books(user: "User") -> list["BookDataClass"]:
-    user_books = book_models.Book.objects.filter(user=user)
+    user_books = book_models.Book.books.filter(user=user)
     
     return [BookDataClass.from_instance(book) for book in user_books]
 
