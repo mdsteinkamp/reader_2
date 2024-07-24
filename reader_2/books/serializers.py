@@ -8,6 +8,7 @@ class BookSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     title = serializers.CharField()
     created_at = serializers.DateTimeField(read_only=True)
+    completed = serializers.BooleanField()
     user = user_serializer.UserSerializer(read_only=True)
 
 

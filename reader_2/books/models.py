@@ -13,4 +13,8 @@ class Book(models.Model):
         max_length=150,
     )
 
+    completed = models.BooleanField(default=False)
+
+    books = models.Manager()
+
     created_at = models.DateTimeField(auto_now_add=True)
