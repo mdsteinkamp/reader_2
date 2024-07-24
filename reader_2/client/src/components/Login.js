@@ -1,9 +1,11 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
+import { UserContext } from "./UserContext"
 
 export default function Login() {
     const [formData, setFormData]  = useState({username: "", password: ""})
     const [errors, setErrors] = useState([])
     const [token, setToken] = useState(localStorage.getItem("jwt"))
+    const {user, setUser} = useContext(UserContext)
 
     function handleChange(e) {
         const name = e.target.name
@@ -33,6 +35,7 @@ export default function Login() {
             // localStorage.setItem("token", tokenArray.pop()[1])
             // console.log(resp.headers.entries().filter(header => header[0] === "token"))
             resp.json().then((user) => {
+              setUser(user)
               console.log(user)
           })} else {
             resp.json().then(e => {

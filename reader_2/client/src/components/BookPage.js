@@ -1,6 +1,9 @@
-
+import { useContext } from "react"
+import { UserContext } from "./UserContext"
 
 export default function BookPage ({ book }) {
+    const {user} = useContext(UserContext)
+    console.log(book)
 
     return (
         <div>
