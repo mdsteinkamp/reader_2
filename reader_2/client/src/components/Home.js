@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import BookList from "./BookList"
 
-export default function Home({ books }) {
+export default function Home({ books, onDeleteBook }) {
 
     // const getBooks = async () => {
     //     try {
@@ -17,10 +17,14 @@ export default function Home({ books }) {
     //     getBooks()
     // }, [])
 
+    function handleDeleteBook(deletedBook) {
+        onDeleteBook(deletedBook)
+    }
+
     return (
         <div className="App">
           <h1>My books</h1>
-          <BookList books={books} />
+          <BookList books={books} onDeleteBook={handleDeleteBook} />
 
         </div>
       )

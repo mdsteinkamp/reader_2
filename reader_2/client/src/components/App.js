@@ -20,6 +20,18 @@ function App() {
     setBooks(books)
   }
 
+  function handleAddBook(newBook) {
+    const updatedBooks = [...books, newBook]
+    setBooks(updatedBooks)
+  }
+
+  function handleDeleteBook(deletedBook) {
+    const updatedBooks = books.filter(book => book.id != deletedBook.id)
+
+    console.log(updatedBooks)
+    setBooks(updatedBooks)
+  }
+
   console.log(books)
 
 
@@ -30,10 +42,10 @@ function App() {
       <NavLink to="/logout">Logout</NavLink>
 
       <Routes>
-        <Route path="/" element={<Home books={books}/>} />
+        <Route path="/" element={<Home books={books} onDeleteBook={handleDeleteBook}/>} />
         <Route path="/login" element={<Login onAddBooks={handleFetchBooks}/>} />
         <Route path="/logout" element={<Logout />} />
-        <Route path="/books/new" element={<AddBook />} />
+        <Route path="/books/new" element={<AddBook books={books} onAddBook={handleAddBook}/>} />
       </Routes>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useState, useContext } from "react"
 import { UserContext } from "./UserContext"
 
-export default function AddBook() {
+export default function AddBook({ books, onAddBook }) {
     const {user} = useContext(UserContext)
     const [formData, setFormData] = useState({
         title: "",
@@ -19,7 +19,7 @@ export default function AddBook() {
         })
       }
 
-      console.log(formData)
+    console.log("in add book", books)
 
       function handleSubmit(e) {
         e.preventDefault()
@@ -34,7 +34,11 @@ export default function AddBook() {
         })
         .then((resp) => {
           if (resp.ok) {
-            resp.json().then(book => console.log(book))
+            resp.json().then(book => {
+                // const updatedBooks = [...books, book]
+                // console.log(updatedBooks)
+                handleAddBook(book)
+            })
           } else {
             resp.json().then(e => {
               setErrors(e.errors)
@@ -43,6 +47,10 @@ export default function AddBook() {
           }
         })
       }
+
+    function handleAddBook(newBook) {
+      onAddBook(newBook)
+    }
 
     return (
         <div>
