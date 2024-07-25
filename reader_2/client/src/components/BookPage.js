@@ -9,6 +9,12 @@ export default function BookPage ({ book }) {
         <div>
             <h4>here is a book</h4>
             <p>{book.title}</p>
+            <input 
+                type="checkbox"
+                id="completed"
+                name="completed"
+                value="completed" />
+            <label for="completed">Completed</label>
         </div>
     )
 }

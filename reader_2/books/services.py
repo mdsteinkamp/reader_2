@@ -64,5 +64,6 @@ def update_book(user: "User", book_id: int, book_data: "BookDataClass") -> "Book
         raise exceptions.PermissionDenied("You're not the user")
 
     book.title = book_data.title
+    book.completed = book_data.completed
     book.save()
     return BookDataClass.from_instance(book_model=book)

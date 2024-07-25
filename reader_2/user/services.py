@@ -15,6 +15,7 @@ if TYPE_CHECKING:
 class UserDataClass:
     username: str
     email: str
+    # user_books: list
     password: str = None
     id: int = None
 
@@ -23,7 +24,8 @@ class UserDataClass:
         return cls(
             username = user.username,
             email = user.email,
-            id = user.id
+            id = user.id,
+            # user_books = user.book_set.all()
         )
     
 def create_user(user_dc: "UserDataClass") -> "UserDataClass":

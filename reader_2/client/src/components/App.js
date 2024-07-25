@@ -5,6 +5,7 @@ import '../App.css';
 import Login from './Login';
 import Logout from './Logout';
 import Home from './Home';
+import AddBook from './AddBook';
 
 function App() {
   // const [formData, setFormData]  = useState({username: "", password: ""})
@@ -25,8 +26,9 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />}/>
-        <Route path="/logout" element={<Logout />}/>
+        <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
+        <Route path="/books/new" element={<AddBook />} />
       </Routes>
     </div>
   );
