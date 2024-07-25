@@ -31,7 +31,7 @@ class BookDataClass:
         )
     
 def create_book(user, book: "BookDataClass") -> "BookDataClass":
-    create_book = book_models.Book.objects.create(
+    create_book = book_models.Book.books.create(
         title=book.title,
         completed=book.completed,
         user=user,
