@@ -1,8 +1,9 @@
 import { useState, useContext } from "react"
 import { UserContext } from "./UserContext"
 
-export default function Login() {
+export default function Login({ onAddBooks }) {
     const [formData, setFormData]  = useState({username: "", password: ""})
+    const [books, setBooks] = useState([])
     const [errors, setErrors] = useState([])
     const [token, setToken] = useState(localStorage.getItem("jwt"))
     const {user, setUser} = useContext(UserContext)
@@ -37,6 +38,7 @@ export default function Login() {
             resp.json().then((user) => {
               setUser(user)
               console.log(user)
+              getBooks()
           })} else {
             resp.json().then(e => {
               setErrors(e.errors)
@@ -45,6 +47,21 @@ export default function Login() {
           }
         })
       }
+
+    const getBooks = async () => {
+        try {
+            const response = await fetch("/api/books")
+            const books = await response.json()
+            setBooks(books)
+            handleFetchBooks(books)
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
+    function handleFetchBooks(books) {
+      onAddBooks(books)
+    }
 
     return (
         <div>

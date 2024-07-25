@@ -7,7 +7,7 @@ import AddBook from "./AddBook"
 
 export default function BookList({ books }) {
     const {user} = useContext(UserContext)
-    console.log("in bookslist", user)
+    // console.log("in bookslist", user)
 
     console.log("in bookslist", books)
 

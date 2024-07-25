@@ -1,22 +1,21 @@
 import { useState, useEffect } from "react"
 import BookList from "./BookList"
 
-export default function Home() {
-    const [books, setBooks] = useState([])
+export default function Home({ books }) {
 
-    const getBooks = async () => {
-        try {
-            const response = await fetch("/api/books")
-            const books = await response.json()
-            setBooks(books)
-        } catch(error) {
-            console.log(error)
-        }
-    }
+    // const getBooks = async () => {
+    //     try {
+    //         const response = await fetch("/api/books")
+    //         const books = await response.json()
+    //         setBooks(books)
+    //     } catch(error) {
+    //         console.log(error)
+    //     }
+    // }
 
-    useEffect(() => {
-        getBooks()
-    }, [])
+    // useEffect(() => {
+    //     getBooks()
+    // }, [])
 
     return (
         <div className="App">
