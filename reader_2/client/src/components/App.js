@@ -26,6 +26,7 @@ function App() {
   }
 
   function handleDeleteBook(deletedBook) {
+    console.log(deletedBook)
     const updatedBooks = books.filter(book => book.id != deletedBook.id)
 
     console.log(updatedBooks)

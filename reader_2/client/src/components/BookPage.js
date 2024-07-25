@@ -3,9 +3,9 @@ import { UserContext } from "./UserContext"
 
 export default function BookPage ({ book, onDeleteBook }) {
     const {user} = useContext(UserContext)
-    console.log(book)
 
     function handleDeleteBook(deletedBook) {
+
         onDeleteBook(deletedBook)
     }
 
@@ -16,9 +16,8 @@ export default function BookPage ({ book, onDeleteBook }) {
             })
         if (response.ok) {
             console.log(response)
-            const deletedBook = response.json()
-            console.log(deletedBook)
-            handleDeleteBook(deletedBook)
+            // const deletedBook = await response.json()
+            handleDeleteBook(book)
         } else {
             console.log("could not find the book")
         }
