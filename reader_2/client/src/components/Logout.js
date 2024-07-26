@@ -1,7 +1,9 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
+import { UserContext } from "./UserContext"
 
 export default function Logout() {
     const [formData, setFormData]  = useState({username: "", password: ""})
+    const {user, setUser} = useContext(UserContext)
     const [errors, setErrors] = useState([])
     const [token, setToken] = useState(localStorage.getItem("jwt"))
 
@@ -24,6 +26,8 @@ export default function Logout() {
             body: JSON.stringify(formData),
             credentials: "include",
           })
+          .then(resp => resp.json())
+          .then(setUser(null))
       }
 
     return (
