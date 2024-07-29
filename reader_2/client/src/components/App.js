@@ -24,14 +24,14 @@ function App() {
   }
 
   function handleAddBook(newBook) {
-    const updatedBooks = [...books, newBook]
+    const updatedBooks = [...user.books, newBook]
     setBooks(updatedBooks)
     setUser({...user, books: updatedBooks})
   }
 
   function handleDeleteBook(deletedBook) {
     console.log(deletedBook)
-    const updatedBooks = books.filter(book => book.id != deletedBook.id)
+    const updatedBooks = user.books.filter(book => book.id != deletedBook.id)
 
     console.log(updatedBooks)
     setBooks(updatedBooks)
