@@ -78,7 +78,7 @@ export default function BookPage ({ book, onDeleteBook, onCompleteBook }) {
                 id="completed"
                 name="completed"
                 checked={book.completed}
-                onClick={handleUpdateBook}
+                onChange={handleUpdateBook}
             />
             <label htmlFor="completed">Completed</label>
             <br />
