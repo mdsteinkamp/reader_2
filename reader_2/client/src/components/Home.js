@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react"
+import { NavLink } from "react-router-dom"
 import { UserContext } from "./UserContext"
 import BookList from "./BookList"
 
@@ -27,7 +28,9 @@ export default function Home({ books, onDeleteBook }) {
 
     return (
         <div className="App">
-          <BookList books={user.books} onDeleteBook={handleDeleteBook} />
+          <br />
+                <NavLink to="/books">See My Books</NavLink>
+
 
         </div>
       )
