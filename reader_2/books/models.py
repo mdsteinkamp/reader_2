@@ -5,7 +5,8 @@ class Book(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        verbose_name="user"
+        verbose_name="user", 
+        related_name="books"
     )
 
     title = models.CharField(

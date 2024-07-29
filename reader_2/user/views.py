@@ -13,14 +13,11 @@ class RegisterApi(views.APIView):
         data = serializer.validated_data
         serializer.instance = services.create_user(user_dc=data)
 
-        print(data)
-
         return response.Response(data=serializer.data)
     
 class LoginApi(views.APIView):
 
     def post(self, request):
-        print(request)
         username = request.data["username"]
         password = request.data["password"]
 
@@ -42,7 +39,6 @@ class LoginApi(views.APIView):
 
         resp.set_cookie(key='jwt', value=token, httponly=True)
         resp["jwt"] = token
-        print(resp.headers)
 
         return resp
     
