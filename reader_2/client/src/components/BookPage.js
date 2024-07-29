@@ -2,10 +2,11 @@ import { useState, useContext } from "react"
 import { UserContext } from "./UserContext"
 import { json } from "react-router-dom"
 
-export default function BookPage ({ book, onDeleteBook }) {
+export default function BookPage ({ book, onDeleteBook, onCompleteBook }) {
     const {user} = useContext(UserContext)
     const [isCompleted, setIsCompleted] = useState(book.completed)
-
+    
+    // console.log(book)
     function handleDeleteBook(deletedBook) {
 
         onDeleteBook(deletedBook)
@@ -17,7 +18,6 @@ export default function BookPage ({ book, onDeleteBook }) {
                 method: "DELETE"
             })
         if (response.ok) {
-            console.log(response)
             // const deletedBook = await response.json()
             handleDeleteBook(book)
         } else {
@@ -29,16 +29,18 @@ export default function BookPage ({ book, onDeleteBook }) {
         }
     }
 
-    function handleCompleteBook() {
+    // function handleCompleteBook() {
+    //     setIsCompleted(isCompleted => !isCompleted)
+    //     const updatedBook = ({...book, completed: !isCompleted})
+    //     console.log(updatedBook)
+    //     handleUpdateBook(updatedBook)
+    // }
+
+
+
+    async function handleUpdateBook() {
         setIsCompleted(isCompleted => !isCompleted)
         const updatedBook = ({...book, completed: !isCompleted})
-        console.log(updatedBook)
-        handleUpdateBook(updatedBook)
-    }
-
-
-
-    async function handleUpdateBook(updatedBook) {
         try {
             const response = await fetch(`api/books/${book.id}/`, {
                 method: "PUT",
@@ -49,16 +51,22 @@ export default function BookPage ({ book, onDeleteBook }) {
                 credentials: "include",
             })
         if (response.ok) {
-            console.log(response)
-            // const deletedBook = await response.json()
+            const completedBook = await response.json()
             console.log("updated!")
+            console.log(completedBook)
+            // const completedBook = ({...book, completed: !isCompleted})
+            onCompleteBook(completedBook)
+            // handleCompleteBook()
         } else {
             console.log("error updating book")
         }
-
         } catch (err) {
             console.log(err)
         }
+    }
+
+    function handleCompleteBook() {
+        console.log('hello')
     }
 
     return (
@@ -69,8 +77,8 @@ export default function BookPage ({ book, onDeleteBook }) {
                 type="checkbox"
                 id="completed"
                 name="completed"
-                value="completed"
-                onClick={handleCompleteBook}
+                checked={book.completed}
+                onClick={handleUpdateBook}
             />
             <label htmlFor="completed">Completed</label>
             <br />

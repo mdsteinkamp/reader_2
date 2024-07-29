@@ -5,13 +5,17 @@ import BookPage from "./BookPage"
 import AddBook from "./AddBook"
 
 
-export default function BookList({ books, onDeleteBook }) {
+export default function BookList({ books, onDeleteBook, onCompleteBook }) {
     const {user} = useContext(UserContext)
 
     if (!user) return <h1>Loading...</h1>
 
     function handleDeleteBook(deletedBook) {
         onDeleteBook(deletedBook)
+    }
+
+    function handleCompleteBook(completedBook) {
+        onCompleteBook(completedBook)
     }
 
     return (
@@ -22,7 +26,7 @@ export default function BookList({ books, onDeleteBook }) {
 
 
             <ul>{user.books.map(book => (
-                <BookPage key={book.id} book={book} onDeleteBook={handleDeleteBook} />    
+                <BookPage key={book.id} book={book} onDeleteBook={handleDeleteBook} onCompleteBook={handleCompleteBook} />    
             ))}
             </ul>
         </div>

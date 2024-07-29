@@ -38,8 +38,12 @@ function App() {
     setUser({...user, books: updatedBooks})
   }
 
-  console.log(books)
-
+  function handleCompleteBook(completedBook) {
+    console.log("in app", completedBook)
+    const newBooks = user.books.map(book => book.id === completedBook.id ? completedBook : book)
+    setUser({...user, books: newBooks})
+    console.log(user)
+  }
 
   return (
     <div className="App">
@@ -51,7 +55,7 @@ function App() {
         <Route path="/" element={<Home onDeleteBook={handleDeleteBook}/>} />
         <Route path="/login" element={<Login onAddBooks={handleFetchBooks}/>} />
         <Route path="/logout" element={<Logout />} />
-        <Route path="/books" element={<BookList onDeleteBook={handleDeleteBook}/>} />
+        <Route path="/books" element={<BookList onDeleteBook={handleDeleteBook} onCompleteBook={handleCompleteBook}/>} />
         <Route path="/books/new" element={<AddBook onAddBook={handleAddBook}/>} />
       </Routes>
     </div>
