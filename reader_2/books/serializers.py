@@ -9,7 +9,7 @@ class BookSerializer(serializers.Serializer):
     title = serializers.CharField()
     created_at = serializers.DateTimeField(read_only=True)
     completed = serializers.BooleanField()
-    user = user_serializer.UserSerializer(read_only=True)
+    # user = user_serializer.UserSerializer(read_only=True)
 
 
     def to_internal_value(self, data):
