@@ -7,9 +7,6 @@ import AddBook from "./AddBook"
 
 export default function BookList({ books, onDeleteBook }) {
     const {user} = useContext(UserContext)
-    // console.log("in bookslist", user)
-
-    console.log("in bookslist", books)
 
     if (!user) return <h1>Loading...</h1>
 
