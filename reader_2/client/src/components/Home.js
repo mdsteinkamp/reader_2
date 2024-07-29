@@ -1,7 +1,11 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
+import { UserContext } from "./UserContext"
 import BookList from "./BookList"
 
 export default function Home({ books, onDeleteBook }) {
+  const {user} = useContext(UserContext)
+  
+  if (!user) return <p>Loading...</p>
 
     // const getBooks = async () => {
     //     try {
@@ -24,7 +28,7 @@ export default function Home({ books, onDeleteBook }) {
     return (
         <div className="App">
           <h1>My books</h1>
-          <BookList books={books} onDeleteBook={handleDeleteBook} />
+          <BookList books={user.books} onDeleteBook={handleDeleteBook} />
 
         </div>
       )

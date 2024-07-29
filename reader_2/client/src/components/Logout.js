@@ -7,6 +7,9 @@ export default function Logout() {
     const [errors, setErrors] = useState([])
     const [token, setToken] = useState(localStorage.getItem("jwt"))
 
+    if (!user) return <h1>Please log in!</h1>
+
+
     function handleChange(e) {
         const name = e.target.name
         const value = e.target.value
@@ -29,6 +32,7 @@ export default function Logout() {
           .then(resp => resp.json())
           .then(setUser(null))
       }
+
 
     return (
         <div>

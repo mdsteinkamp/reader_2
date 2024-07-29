@@ -11,10 +11,12 @@ function App() {
   // const [formData, setFormData]  = useState({username: "", password: ""})
   // const [errors, setErrors] = useState([])
   // const [token, setToken] = useState(localStorage.getItem("jwt"))
-  const {user} = useContext(UserContext)
+  const {user, setUser} = useContext(UserContext)
   const [books, setBooks] = useState([])
 
   console.log(user)
+
+  
 
   function handleFetchBooks(books) {
     setBooks(books)
@@ -23,6 +25,7 @@ function App() {
   function handleAddBook(newBook) {
     const updatedBooks = [...books, newBook]
     setBooks(updatedBooks)
+    setUser({...user, books: updatedBooks})
   }
 
   function handleDeleteBook(deletedBook) {
@@ -31,6 +34,7 @@ function App() {
 
     console.log(updatedBooks)
     setBooks(updatedBooks)
+    setUser({...user, books: updatedBooks})
   }
 
   console.log(books)
@@ -43,10 +47,10 @@ function App() {
       <NavLink to="/logout">Logout</NavLink>
 
       <Routes>
-        <Route path="/" element={<Home books={books} onDeleteBook={handleDeleteBook}/>} />
+        <Route path="/" element={<Home onDeleteBook={handleDeleteBook}/>} />
         <Route path="/login" element={<Login onAddBooks={handleFetchBooks}/>} />
         <Route path="/logout" element={<Logout />} />
-        <Route path="/books/new" element={<AddBook books={books} onAddBook={handleAddBook}/>} />
+        <Route path="/books/new" element={<AddBook onAddBook={handleAddBook}/>} />
       </Routes>
     </div>
   );
