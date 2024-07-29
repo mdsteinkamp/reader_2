@@ -19,9 +19,12 @@ export default function BookList({ books, onDeleteBook }) {
 
     return (
         <div>
+            <br />
             <NavLink to="/books/new" element={<AddBook />}>Add Book</NavLink>
+          <h1>My books</h1>
 
-            <ul>{books.map(book => (
+
+            <ul>{user.books.map(book => (
                 <BookPage key={book.id} book={book} onDeleteBook={handleDeleteBook} />    
             ))}
             </ul>

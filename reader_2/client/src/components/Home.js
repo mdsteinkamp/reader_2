@@ -27,7 +27,6 @@ export default function Home({ books, onDeleteBook }) {
 
     return (
         <div className="App">
-          <h1>My books</h1>
           <BookList books={user.books} onDeleteBook={handleDeleteBook} />
 
         </div>

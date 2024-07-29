@@ -6,6 +6,7 @@ import Login from './Login';
 import Logout from './Logout';
 import Home from './Home';
 import AddBook from './AddBook';
+import BookList from './BookList';
 
 function App() {
   // const [formData, setFormData]  = useState({username: "", password: ""})
@@ -42,14 +43,15 @@ function App() {
 
   return (
     <div className="App">
-      <NavLink to="/">Home</NavLink>
       <NavLink to="/login">Login</NavLink>
       <NavLink to="/logout">Logout</NavLink>
+      <NavLink to="/books">My Books</NavLink>
 
       <Routes>
         <Route path="/" element={<Home onDeleteBook={handleDeleteBook}/>} />
         <Route path="/login" element={<Login onAddBooks={handleFetchBooks}/>} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/books" element={<BookList onDeleteBook={handleDeleteBook}/>} />
         <Route path="/books/new" element={<AddBook onAddBook={handleAddBook}/>} />
       </Routes>
     </div>

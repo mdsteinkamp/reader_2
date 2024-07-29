@@ -36,7 +36,7 @@ export default function BookPage ({ book, onDeleteBook }) {
                 id="completed"
                 name="completed"
                 value="completed" />
-            <label for="completed">Completed</label>
+            <label htmlFor="completed">Completed</label>
             <br />
             <button onClick={deleteBook}>Remove book from your list</button>
         </div>
