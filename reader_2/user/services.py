@@ -53,13 +53,11 @@ def create_token(user_id: int) -> str:
     )
 
     ### add .decode("utf-8") on WSL
-    token = jwt.encode(payload, settings.JWT_SECRET, algorithm="HS256")
+    token = jwt.encode(payload, settings.JWT_SECRET, algorithm="HS256").decode("utf-8")
 
     return token
 
 def decode_token(token: str) -> str:
     decoded_token = str(token)
-    print("hello from decode token")
-    print(decoded_token)
 
     return decoded_token

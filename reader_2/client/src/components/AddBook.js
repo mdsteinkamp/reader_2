@@ -19,8 +19,6 @@ export default function AddBook({ books, onAddBook }) {
         })
       }
 
-    console.log("in add book", books)
-
       function handleSubmit(e) {
         e.preventDefault()
         console.log(formData)
