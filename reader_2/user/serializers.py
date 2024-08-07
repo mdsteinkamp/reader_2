@@ -3,6 +3,8 @@ from rest_framework import serializers
 from . import services
 
 class UserSerializer(serializers.Serializer):
+    # user_books = serializers.SerializerMethodField()
+
     id = serializers.IntegerField(read_only=True)
     username = serializers.CharField()
     email = serializers.CharField()

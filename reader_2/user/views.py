@@ -54,6 +54,7 @@ class UserApi(views.APIView):
         user = request.user
 
         serializer = user_serializer.UserSerializer(user)
+        print(serializer.data)
 
         return response.Response(serializer.data)
     
