@@ -2,7 +2,7 @@ import { useState, useContext } from "react"
 import { UserContext } from "./UserContext"
 import { json } from "react-router-dom"
 
-export default function BookPage ({ book, onDeleteBook, onCompleteBook }) {
+export default function BookItem ({ book, onDeleteBook, onCompleteBook }) {
     const {user} = useContext(UserContext)
     const [isCompleted, setIsCompleted] = useState(book.completed)
     
@@ -63,10 +63,6 @@ export default function BookPage ({ book, onDeleteBook, onCompleteBook }) {
         } catch (err) {
             console.log(err)
         }
-    }
-
-    function handleCompleteBook() {
-        console.log('hello')
     }
 
     return (

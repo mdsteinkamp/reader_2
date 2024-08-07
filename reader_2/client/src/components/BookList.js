@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { NavLink } from "react-router-dom"
 import { UserContext } from "./UserContext"
-import BookPage from "./BookPage"
+import BookItem from "./BookItem"
 import AddBook from "./AddBook"
 
 
@@ -26,7 +26,7 @@ export default function BookList({ books, onDeleteBook, onCompleteBook }) {
 
 
             <ul>{user.books.map(book => (
-                <BookPage key={book.id} book={book} onDeleteBook={handleDeleteBook} onCompleteBook={handleCompleteBook} />    
+                <BookItem key={book.id} book={book} onDeleteBook={handleDeleteBook} onCompleteBook={handleCompleteBook} />    
             ))}
             </ul>
         </div>
