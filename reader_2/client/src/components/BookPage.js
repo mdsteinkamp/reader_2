@@ -9,6 +9,13 @@ export default function BookPage() {
     const book = user.books.find(book => book.id === parseInt(id))
 
     return (
-        <p>{book.title}</p>
+        <div>
+            <p>{book.title}</p>
+            <ul>{book.characters.map(character => (
+                    <p>{character.name}</p>
+                ))}
+            </ul>
+
+        </div>
     )
 }
