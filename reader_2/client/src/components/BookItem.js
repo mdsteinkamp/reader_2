@@ -1,12 +1,16 @@
 import { useState, useContext } from "react"
+import { Link } from "react-router-dom"
 import { UserContext } from "./UserContext"
 import { json } from "react-router-dom"
 
 export default function BookItem ({ book, onDeleteBook, onCompleteBook }) {
     const {user} = useContext(UserContext)
     const [isCompleted, setIsCompleted] = useState(book.completed)
+
+    if (!user) return <h1>Loading...</h1>
+    console.log(book)
+
     
-    // console.log(book)
     function handleDeleteBook(deletedBook) {
 
         onDeleteBook(deletedBook)
@@ -18,7 +22,6 @@ export default function BookItem ({ book, onDeleteBook, onCompleteBook }) {
                 method: "DELETE"
             })
         if (response.ok) {
-            // const deletedBook = await response.json()
             handleDeleteBook(book)
         } else {
             console.log("could not find the book")
@@ -28,15 +31,6 @@ export default function BookItem ({ book, onDeleteBook, onCompleteBook }) {
             console.log(err)
         }
     }
-
-    // function handleCompleteBook() {
-    //     setIsCompleted(isCompleted => !isCompleted)
-    //     const updatedBook = ({...book, completed: !isCompleted})
-    //     console.log(updatedBook)
-    //     handleUpdateBook(updatedBook)
-    // }
-
-
 
     async function handleUpdateBook() {
         setIsCompleted(isCompleted => !isCompleted)
@@ -54,9 +48,7 @@ export default function BookItem ({ book, onDeleteBook, onCompleteBook }) {
             const completedBook = await response.json()
             console.log("updated!")
             console.log(completedBook)
-            // const completedBook = ({...book, completed: !isCompleted})
             onCompleteBook(completedBook)
-            // handleCompleteBook()
         } else {
             console.log("error updating book")
         }
@@ -67,8 +59,9 @@ export default function BookItem ({ book, onDeleteBook, onCompleteBook }) {
 
     return (
         <div>
-            <h4>here is a book</h4>
-            <p>{book.title}</p>
+            <Link to={`${book.id}/`}>
+                <h4>{book.title}</h4>
+            </Link>
             <input 
                 type="checkbox"
                 id="completed"

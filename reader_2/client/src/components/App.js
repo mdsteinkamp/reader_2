@@ -7,6 +7,7 @@ import Logout from './Logout';
 import Home from './Home';
 import AddBook from './AddBook';
 import BookList from './BookList';
+import BookPage from './BookPage';
 
 function App() {
   // const [formData, setFormData]  = useState({username: "", password: ""})
@@ -57,6 +58,8 @@ function App() {
         <Route path="/logout" element={<Logout />} />
         <Route path="/books" element={<BookList onDeleteBook={handleDeleteBook} onCompleteBook={handleCompleteBook}/>} />
         <Route path="/books/new" element={<AddBook onAddBook={handleAddBook}/>} />
+        <Route path="/books/:id" element={<BookPage/>} />
+
       </Routes>
     </div>
   );

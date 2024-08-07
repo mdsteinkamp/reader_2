@@ -5,10 +5,12 @@ import BookItem from "./BookItem"
 import AddBook from "./AddBook"
 
 
-export default function BookList({ books, onDeleteBook, onCompleteBook }) {
+export default function BookList({ onDeleteBook, onCompleteBook }) {
     const {user} = useContext(UserContext)
 
-    if (!user) return <h1>Loading...</h1>
+    if (!user) return <h1>Please log in!</h1>
+
+    console.log(user.books)
 
     function handleDeleteBook(deletedBook) {
         onDeleteBook(deletedBook)
