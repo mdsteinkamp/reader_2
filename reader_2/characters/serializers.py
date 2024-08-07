@@ -1,16 +1,18 @@
 from rest_framework import serializers
 
-from characters import serializers as character_serializer
 # from user import serializers as user_serializer
 
 from . import services
 
-class BookSerializer(serializers.Serializer):
+class CharacterSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
-    title = serializers.CharField()
+    name = serializers.CharField()
+    appearance = serializers.CharField()
+    locations = serializers.CharField()
+    associates = serializers.CharField()
+    position = serializers.CharField()
+    knowledge = serializers.CharField()
     created_at = serializers.DateTimeField(read_only=True)
-    completed = serializers.BooleanField()
-    characters = character_serializer.CharacterSerializer(many=True, read_only=True)
 
 
     def to_internal_value(self, data):

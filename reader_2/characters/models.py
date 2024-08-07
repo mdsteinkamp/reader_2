@@ -16,7 +16,6 @@ class Character(models.Model):
     associates = models.TextField()
     position = models.TextField()
     knowledge = models.TextField()
-
-
-
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    characters = models.Manager()
