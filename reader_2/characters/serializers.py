@@ -18,4 +18,4 @@ class CharacterSerializer(serializers.Serializer):
     def to_internal_value(self, data):
         data = super().to_internal_value(data)
 
-        return services.BookDataClass(**data)
+        return services.CharacterDataClass(**data)
