@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import views, response, permissions, status as rest_status
 
-
+from . import models
 from . import services
 from . import serializers as character_serializer
 
@@ -22,7 +22,8 @@ class CharacterCreateListApi(views.APIView):
     #     return response.Response(data=serializer.data)
 
     def get(self, request):
-        character_collection = services.get_book_characters(book=request.book)
+        print(request)
+        character_collection = models.Character.characters.all()
         serializer = character_serializer.CharacterSerializer(character_collection, many=True)
         return response.Response(data=serializer.data)
 
