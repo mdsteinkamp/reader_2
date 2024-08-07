@@ -25,8 +25,6 @@ export default function BookList({ onDeleteBook, onCompleteBook }) {
             <br />
             <NavLink to="/books/new" element={<AddBook />}>Add Book</NavLink>
           <h1>My books</h1>
-
-
             <ul>{user.books.map(book => (
                 <BookItem key={book.id} book={book} onDeleteBook={handleDeleteBook} onCompleteBook={handleCompleteBook} />    
             ))}
