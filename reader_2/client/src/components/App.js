@@ -1,13 +1,14 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react'
 import { Route, Routes, NavLink } from 'react-router-dom'
-import { UserContext } from './UserContext';
+import { UserContext } from './UserContext'
 import '../App.css';
-import Login from './Login';
-import Logout from './Logout';
-import Home from './Home';
-import AddBook from './AddBook';
-import BookList from './BookList';
-import BookPage from './BookPage';
+import Login from './Login'
+import Logout from './Logout'
+import Home from './Home'
+import AddBook from './AddBook'
+import BookList from './BookList'
+import BookPage from './BookPage'
+import CharacterPage from './CharacterPage'
 
 function App() {
   // const [formData, setFormData]  = useState({username: "", password: ""})
@@ -58,7 +59,8 @@ function App() {
         <Route path="/logout" element={<Logout />} />
         <Route path="/books" element={<BookList onDeleteBook={handleDeleteBook} onCompleteBook={handleCompleteBook}/>} />
         <Route path="/books/new" element={<AddBook onAddBook={handleAddBook}/>} />
-        <Route path="/books/:id" element={<BookPage/>} />
+        <Route path="/books/:id" element={<BookPage />} />
+        <Route path="/books/:id/characters/:id" element={<CharacterPage />} />
 
       </Routes>
     </div>
