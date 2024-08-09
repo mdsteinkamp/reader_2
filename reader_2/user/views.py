@@ -48,6 +48,7 @@ class UserApi(views.APIView):
 
     def get(self, request):
         user = request.user
+        print(user.books)
 
         serializer = user_serializer.UserSerializer(user)
         print(serializer.data)
