@@ -30,7 +30,10 @@ class BookRetrieveUpdateDelete(views.APIView):
 
     def get(self, request, book_id):
         book = services.get_user_book_detail(book_id=book_id)
+        print(book)
+
         serializer = book_serializer.BookSerializer(book)
+        print(serializer.data)
         return response.Response(data=serializer.data)
     
     def delete(self, request, book_id):
