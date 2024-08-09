@@ -15,12 +15,13 @@ export default function BookPage() {
 
             <h4>Characters</h4>
             <ul>{book.characters.map(character => (
-                <div>
-                    <p>{character.name}</p>
-                <Link to={`characters/${character.id}/`} state={{ book }}>
-                    <h4>{character.name}</h4>
-                    </Link>
-                </div>
+                // key={character.id}
+                    <div key={character.id}>
+                        <p>{character.name}</p>
+                    <Link to={`characters/${character.id}/`} state={{ book }}>
+                        <h4>{character.name}</h4>
+                        </Link>
+                    </div>
                 ))}
             </ul>
 

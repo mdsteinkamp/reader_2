@@ -8,7 +8,7 @@ export default function BookItem ({ book, onDeleteBook, onCompleteBook }) {
     const [isCompleted, setIsCompleted] = useState(book.completed)
 
     if (!user) return <h1>Loading...</h1>
-    console.log(book)
+    // console.log(book)
 
     
     function handleDeleteBook(deletedBook) {
