@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useParams, useLocation } from "react-router-dom"
 
 export default function CharacterPage({ state }) {
@@ -6,6 +7,8 @@ export default function CharacterPage({ state }) {
     const location = useLocation()
     const {book} = location.state
     console.log(book)
+    const [currentBook] = useState(book)
+
 
     const character = book.characters.find(char => char.id === parseInt(id))
 

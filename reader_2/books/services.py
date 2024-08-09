@@ -46,6 +46,15 @@ def get_user_books(user: "User") -> list["BookDataClass"]:
 
 def get_user_book_detail(book_id: int) -> "BookDataClass":
     book = get_object_or_404(book_models.Book, pk=book_id)
+    # for char in book.characters.all():
+    #     print(char.name)
+
+    # print(book.characters.all())
+
+    # characters = [char for char in book.characters.all()]
+    
+    # book.characters_set() =  characters
+    # book.characters = book.characters.set()
 
     return BookDataClass.from_instance(book_model=book)
 
