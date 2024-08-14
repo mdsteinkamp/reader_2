@@ -15,6 +15,7 @@ export default function AddBook({ books, onAddBook }) {
           ...formData,
           user: user,
           completed: false,
+          characters: [],
           [name]: value
         })
       }
