@@ -47,3 +47,17 @@ def get_book_character_detail(character_id: int) -> "CharacterDataClass":
     character = get_object_or_404(character_models.Character, pk=character_id)
 
     return CharacterDataClass.from_instance(character_model=character)
+
+def create_character(book, character: "CharacterDataClass") -> "CharacterDataClass":
+    print(book)
+    create_character = character_models.Character.characters.create(
+        name=character.name,
+        appearance=character.appearance,
+        locations=character.locations,
+        associates=character.associates,
+        position=character.position,
+        knowledge=character.knowledge,
+        book_id=book["id"],
+    )
+
+    return CharacterDataClass.from_instance(character_model=create_character)

@@ -9,6 +9,7 @@ import AddBook from './AddBook'
 import BookList from './BookList'
 import BookPage from './BookPage'
 import CharacterPage from './CharacterPage'
+import AddCharacter from './AddCharacter';
 
 function App() {
   // const [formData, setFormData]  = useState({username: "", password: ""})
@@ -61,6 +62,7 @@ function App() {
         <Route path="/books/new" element={<AddBook onAddBook={handleAddBook}/>} />
         <Route path="/books/:id" element={<BookPage />} />
         <Route path="/books/:id/characters/:id" element={<CharacterPage />} />
+        <Route path="/books/:id/characters/new" element={<AddCharacter />} />
 
       </Routes>
     </div>

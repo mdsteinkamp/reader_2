@@ -19,7 +19,7 @@ export default function BookPage() {
 
             <h1>Characters</h1>
             <br />
-            <NavLink to="/characters/new" element={<AddCharacter />}>Add Character</NavLink>
+            <NavLink to={`/books/${book.id}/characters/new`} element={<AddCharacter />}>Add Character</NavLink>
             <ul>{book.characters.map(character => (
                     <div key={character.id}>
                     <Link to={`characters/${character.id}/`} state={{ book }}>
@@ -28,7 +28,6 @@ export default function BookPage() {
                     </div>
                 ))}
             </ul>
-
         </div>
     )
 }
