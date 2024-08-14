@@ -29,7 +29,13 @@ class BookRetrieveUpdateDelete(views.APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, book_id):
+        # user = request.user
+        # book = user.books.all().get(id=book_id)
+        # book = user.books.
+        # book = books.services.get_user_book_detail(book_id=book_id)
         book = services.get_user_book_detail(book_id=book_id)
+        # print(book.character_set())
+
         # characters = book.characters.all()
         # print(characters)
         # print(book)

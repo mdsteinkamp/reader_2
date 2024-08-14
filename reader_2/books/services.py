@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 
 from user import services as user_services
 from . import models as book_models
+from characters import models as character_models
 
 if TYPE_CHECKING:
     from models import Book
@@ -16,18 +17,21 @@ if TYPE_CHECKING:
 class BookDataClass:
     title: str
     completed: bool
+    characters: list[int]
     created_at: datetime.datetime = None
     user: user_services.UserDataClass = None
     id: int = None
 
     @classmethod
     def from_instance(cls, book_model:"Book") -> "BookDataClass":
+        print(book_model.characters.all())
         return cls(
             title=book_model.title,
             created_at=book_model.created_at,
             id=book_model.id,
             completed=book_model.completed,
-            user=book_model.user
+            user=book_model.user,
+            characters=book_model.characters.all()
         )
     
 def create_book(user, book: "BookDataClass") -> "BookDataClass":
@@ -46,15 +50,6 @@ def get_user_books(user: "User") -> list["BookDataClass"]:
 
 def get_user_book_detail(book_id: int) -> "BookDataClass":
     book = get_object_or_404(book_models.Book, pk=book_id)
-    # for char in book.characters.all():
-    #     print(char.name)
-
-    # print(book.characters.all())
-
-    # characters = [char for char in book.characters.all()]
-    
-    # book.characters_set() =  characters
-    # book.characters = book.characters.set()
 
     return BookDataClass.from_instance(book_model=book)
 
