@@ -37,9 +37,10 @@ class CharacterRetrieveUpdateDelete(views.APIView):
         serializer = character_serializer.CharacterSerializer(character)
         return response.Response(data=serializer.data)
     
-    # def delete(self, request, book_id):
-    #     services.delete_book(user=request.user, book_id=book_id)
-    #     return response.Response(data=rest_status.HTTP_204_NO_CONTENT)
+    def delete(self, request, character_id):
+        print(request.user.books.all())
+        services.delete_character(user=request.user, character_id=character_id)
+        return response.Response(data=rest_status.HTTP_204_NO_CONTENT)
 
     # def put(self, request, book_id):
     #     serializer = character_serializer.CharacterSerializer(data=request.data)

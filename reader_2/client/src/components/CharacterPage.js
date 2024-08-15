@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useParams, useLocation } from "react-router-dom"
 
-export default function CharacterPage({ state }) {
+export default function CharacterPage({ state, onDeleteCharacter }) {
     const {id} = useParams()
     const location = useLocation()
     const {book} = location.state
@@ -13,6 +13,22 @@ export default function CharacterPage({ state }) {
 
     // const character = user.books.find(char => char.id === parseInt(id))
 
+    async function handleDeleteCharacter() {
+        try {
+            const response = await fetch(`/api/characters/${character.id}`, {
+                method: "DELETE"
+            })
+        if (response.ok) {
+            onDeleteCharacter(character)
+        } else {
+            console.log("could not find the character")
+        }
+            
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return (
         <div>
             <p>Name: {character.name}</p>
@@ -21,6 +37,8 @@ export default function CharacterPage({ state }) {
             <p>Positions/Duties: {character.position}</p>
             <p>Friends/Associates: {character.associates}</p>
             <p>Knowledge: {character.knowledge}</p>
+
+            <button onClick={handleDeleteCharacter}>Remove Character</button>
 
         </div>
     )

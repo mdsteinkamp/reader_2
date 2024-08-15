@@ -61,3 +61,13 @@ def create_character(book, character: "CharacterDataClass") -> "CharacterDataCla
     )
 
     return CharacterDataClass.from_instance(character_model=create_character)
+
+def delete_character(user, character_id):
+    character = get_object_or_404(character_models.Character, pk=character_id)
+    print(character.book.user.id)
+
+    if user.id != character.book.user.id:
+        raise exceptions.PermissionDenied("You're not the user")
+
+    character.delete()
+    pass

@@ -62,6 +62,10 @@ function App() {
 
   }
 
+  function handleDeleteCharacter(character) {
+    console.log("in app", character)
+  }
+
   return (
     <div className="App">
       <NavLink to="/login">Login</NavLink>
@@ -75,7 +79,7 @@ function App() {
         <Route path="/books" element={<BookList onDeleteBook={handleDeleteBook} onCompleteBook={handleCompleteBook}/>} />
         <Route path="/books/new" element={<AddBook onAddBook={handleAddBook}/>} />
         <Route path="/books/:id" element={<BookPage />} />
-        <Route path="/books/:id/characters/:id" element={<CharacterPage />} />
+        <Route path="/books/:id/characters/:id" element={<CharacterPage onDeleteCharacter={handleDeleteCharacter}/>} />
         <Route path="/books/:id/characters/new" element={<AddCharacter onAddCharacter={handleAddCharacter}/>} />
 
       </Routes>
