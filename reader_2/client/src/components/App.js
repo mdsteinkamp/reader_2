@@ -53,17 +53,26 @@ function App() {
     const updatedCharacters = [...currentBook.characters, newCharacter]
     // console.log(updatedCharacters)
     const updatedBook = {...currentBook, characters: updatedCharacters}
-    console.log("udpated book id:", updatedBook.id)
+    // console.log("udpated book id:", updatedBook.id)
     const updatedBooks = user.books.map(book => book.id === currentBook.id ? updatedBook : book)
-    console.log(updatedBooks)
+    // console.log(updatedBooks)
     const updatedUser = ({...user, books: updatedBooks})
     // console.log("in app handle add char", updatedUser)
     setUser(updatedUser)
 
   }
 
-  function handleDeleteCharacter(character) {
-    console.log("in app", character)
+  function handleDeleteCharacter(currentBook, deletedCharacter) {
+    const characterBook = user.books.find(book => book.id === currentBook.id)
+    const updatedCharacters = characterBook.characters.filter(char => char.id != deletedCharacter.id)
+    // console.log(updatedCharacters)
+    const updatedBook = {...currentBook, characters: updatedCharacters}
+    console.log("udpated book id:", updatedBook.id)
+    const updatedBooks = user.books.map(book => book.id === currentBook.id ? updatedBook : book)
+    console.log(updatedBooks)
+    const updatedUser = ({...user, books: updatedBooks})
+    // console.log("in app handle add char", updatedUser)
+    setUser(updatedUser)
   }
 
   return (

@@ -19,7 +19,7 @@ export default function CharacterPage({ state, onDeleteCharacter }) {
                 method: "DELETE"
             })
         if (response.ok) {
-            onDeleteCharacter(character)
+            onDeleteCharacter(book, character)
         } else {
             console.log("could not find the character")
         }
