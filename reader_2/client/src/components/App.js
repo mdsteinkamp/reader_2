@@ -54,7 +54,7 @@ function App() {
     // console.log(updatedCharacters)
     const updatedBook = {...currentBook, characters: updatedCharacters}
     console.log("udpated book id:", updatedBook.id)
-    const updatedBooks = user.books.map(book => book.id === currentBook.id ? currentBook : book)
+    const updatedBooks = user.books.map(book => book.id === currentBook.id ? updatedBook : book)
     console.log(updatedBooks)
     const updatedUser = ({...user, books: updatedBooks})
     // console.log("in app handle add char", updatedUser)
