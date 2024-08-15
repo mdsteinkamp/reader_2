@@ -48,6 +48,20 @@ function App() {
     console.log(user)
   }
 
+  function handleAddCharacter(currentBook, newCharacter) {
+    console.log("in app", newCharacter)
+    const updatedCharacters = [...currentBook.characters, newCharacter]
+    // console.log(updatedCharacters)
+    const updatedBook = {...currentBook, characters: updatedCharacters}
+    console.log("udpated book id:", updatedBook.id)
+    const updatedBooks = user.books.map(book => book.id === currentBook.id ? currentBook : book)
+    console.log(updatedBooks)
+    const updatedUser = ({...user, books: updatedBooks})
+    // console.log("in app handle add char", updatedUser)
+    setUser(updatedUser)
+
+  }
+
   return (
     <div className="App">
       <NavLink to="/login">Login</NavLink>
@@ -62,7 +76,7 @@ function App() {
         <Route path="/books/new" element={<AddBook onAddBook={handleAddBook}/>} />
         <Route path="/books/:id" element={<BookPage />} />
         <Route path="/books/:id/characters/:id" element={<CharacterPage />} />
-        <Route path="/books/:id/characters/new" element={<AddCharacter />} />
+        <Route path="/books/:id/characters/new" element={<AddCharacter onAddCharacter={handleAddCharacter}/>} />
 
       </Routes>
     </div>

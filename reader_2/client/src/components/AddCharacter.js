@@ -1,10 +1,12 @@
 import { useState, useContext } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useLocation } from "react-router-dom"
 import { UserContext } from "./UserContext"
 
-export default function AddCharacter() {
+export default function AddCharacter({ state, onAddCharacter }) {
     const {user} = useContext(UserContext)
     const {id} = useParams()
+    const location = useLocation()
+    const {book} = location.state
     const [formData, setFormData] = useState({
         name: "",
         appearance: "",
@@ -16,8 +18,9 @@ export default function AddCharacter() {
       const [errors, setErrors] = useState([])
 
     if (!user) return <h1>Please log in!</h1>
+    console.log(book)
 
-    const book = user.books.find(book => book.id === parseInt(id))
+    // const book = user.books.find(book => book.id === parseInt(id))
 
     function handleChange(e) {
         const name = e.target.name
@@ -43,9 +46,8 @@ export default function AddCharacter() {
         .then((resp) => {
           if (resp.ok) {
             resp.json().then(character => {
-                // const updatedBooks = [...books, book]
-                // console.log(updatedBooks)
-                console.log(character)
+
+                handleAddCharacter(character)
             })
           } else {
             resp.json().then(e => {
@@ -57,7 +59,7 @@ export default function AddCharacter() {
       }
 
     function handleAddCharacter(newCharacter) {
-      console.log(newCharacter)
+      onAddCharacter(book, newCharacter)
     }
     
     return (

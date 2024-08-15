@@ -6,7 +6,7 @@ import BookList from "./BookList"
 export default function Home({ books, onDeleteBook }) {
   const {user} = useContext(UserContext)
   
-  if (!user) return <p>Loading...</p>
+  if (!user) return <p>Please Log In...</p>
 
     // const getBooks = async () => {
     //     try {

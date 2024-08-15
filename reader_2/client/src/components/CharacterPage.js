@@ -3,7 +3,6 @@ import { useParams, useLocation } from "react-router-dom"
 
 export default function CharacterPage({ state }) {
     const {id} = useParams()
-
     const location = useLocation()
     const {book} = location.state
     console.log(book)
