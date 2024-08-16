@@ -10,6 +10,7 @@ import BookList from './BookList'
 import BookPage from './BookPage'
 import CharacterPage from './CharacterPage'
 import AddCharacter from './AddCharacter';
+import EditCharacter from './EditCharacter';
 
 function App() {
   // const [formData, setFormData]  = useState({username: "", password: ""})
@@ -51,13 +52,9 @@ function App() {
   function handleAddCharacter(currentBook, newCharacter) {
     console.log("in app", newCharacter)
     const updatedCharacters = [...currentBook.characters, newCharacter]
-    // console.log(updatedCharacters)
     const updatedBook = {...currentBook, characters: updatedCharacters}
-    // console.log("udpated book id:", updatedBook.id)
     const updatedBooks = user.books.map(book => book.id === currentBook.id ? updatedBook : book)
-    // console.log(updatedBooks)
     const updatedUser = ({...user, books: updatedBooks})
-    // console.log("in app handle add char", updatedUser)
     setUser(updatedUser)
 
   }
@@ -65,13 +62,9 @@ function App() {
   function handleDeleteCharacter(currentBook, deletedCharacter) {
     const characterBook = user.books.find(book => book.id === currentBook.id)
     const updatedCharacters = characterBook.characters.filter(char => char.id != deletedCharacter.id)
-    // console.log(updatedCharacters)
     const updatedBook = {...currentBook, characters: updatedCharacters}
-    // console.log("udpated book id:", updatedBook.id)
     const updatedBooks = user.books.map(book => book.id === currentBook.id ? updatedBook : book)
-    // console.log(updatedBooks)
     const updatedUser = ({...user, books: updatedBooks})
-    // console.log("in app handle add char", updatedUser)
     setUser(updatedUser)
   }
 
@@ -90,6 +83,7 @@ function App() {
         <Route path="/books/:id" element={<BookPage />} />
         <Route path="/books/:id/characters/:id" element={<CharacterPage onDeleteCharacter={handleDeleteCharacter}/>} />
         <Route path="/books/:id/characters/new" element={<AddCharacter onAddCharacter={handleAddCharacter}/>} />
+        <Route path="/books/:id/characters/:id/edit" element={<EditCharacter />} />
 
       </Routes>
     </div>

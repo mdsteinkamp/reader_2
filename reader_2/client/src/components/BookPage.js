@@ -1,11 +1,12 @@
 import { useState, useContext } from "react"
-import { Link, NavLink } from "react-router-dom"
+import { Link, NavLink, useLocation } from "react-router-dom"
 import { UserContext } from "./UserContext"
 import { useParams } from "react-router-dom"
 import AddCharacter from "./AddCharacter"
 
 export default function BookPage() {
     const {user} = useContext(UserContext)
+    const location = useLocation()
     const {id} = useParams()
 
     if (!user) return <h1>Please log in!</h1>
@@ -22,9 +23,9 @@ export default function BookPage() {
             <NavLink to={`/books/${book.id}/characters/new`} state={{ book }} element={<AddCharacter />}>Add Character</NavLink>
             <ul>{book.characters.map(character => (
                     <div key={character.id}>
-                    <Link to={`characters/${character.id}/`} state={{ book }}>
+                    <NavLink to={`characters/${character.id}/`} state={{ location, book }}>
                         <h4>{character.name}</h4>
-                        </Link>
+                        </NavLink>
                     </div>
                 ))}
             </ul>

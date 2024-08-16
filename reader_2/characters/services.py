@@ -71,3 +71,15 @@ def delete_character(user, character_id):
 
     character.delete()
     pass
+
+def udpate_character(user, character_id, character_data):
+    character = get_object_or_404(character_models.Character, pk=character_id)
+
+    if user.id != character.book.user.id:
+        raise exceptions.PermissionDenied("You're not the user")
+    
+    character = character_data
+    character.save()
+    
+    print(character)
+    return CharacterDataClass.from_instance(character_model=character)
