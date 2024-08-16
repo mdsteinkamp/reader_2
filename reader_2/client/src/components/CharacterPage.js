@@ -91,16 +91,22 @@ export default function CharacterPage({ state, onDeleteCharacter }) {
                 </form>
             : <span>Name: {character.name}  <button onClick={handleEditName}>edit</button></span>}
             <br />
+
             <span>Appearance: {character.appearance}  <button>edit</button></span>
             <br />
+
             <span>Locations: {character.locations}  <button>edit</button></span>
             <br />
+
             <span>Positions/Duties: {character.position}  <button>edit</button></span>
             <br />
+
             <span>Friends/Associates: {character.associates}  <button>edit</button></span>
             <br />
+
             <span>Knowledge: {character.knowledge}  <button>edit</button></span>
             <br />
+            
             <br />
             <button onClick={handleDeleteCharacter}>Remove Character</button>
 
