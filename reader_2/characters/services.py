@@ -78,8 +78,16 @@ def udpate_character(user, character_id, character_data):
     if user.id != character.book.user.id:
         raise exceptions.PermissionDenied("You're not the user")
     
-    character = character_data
+    character.name = character_data.name
+    character.appearance = character_data.appearance
+    character.locations = character_data.locations
+    character.associates = character_data.associates
+    character.position = character_data.position
+    character.knowledge = character_data.knowledge
+    character.created_at = character.created_at
+    character.id = character_id
+    character.book = character.book
+    print(character)
     character.save()
     
-    print(character)
     return CharacterDataClass.from_instance(character_model=character)
