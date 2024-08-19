@@ -10,7 +10,17 @@ export default function CharacterPage({ state, onDeleteCharacter }) {
     const {book = null} = location.state
     const [currentBook] = useState(book)
     const [editName, setEditName] = useState(false)
+    const [editAppearance, setEditAppearance] = useState(false)
+    const [editLocations, setEditLocations] = useState(false)
+    const [editPositions, setEditPositions] = useState(false)
+    const [editFriends, setEditFriends] = useState(false)
+    const [editKnowledge, setEditKnowledge] = useState(false)
     const [name, setName] = useState(book.characters.find(char => char.id === parseInt(id)).name)
+    const [appearance, setAppearance] = useState(book.characters.find(char => char.id === parseInt(id)).appearance)
+    const [locations, setLocations] = useState(book.characters.find(char => char.id === parseInt(id)).locations)
+    const [positions, setPositions] = useState(book.characters.find(char => char.id === parseInt(id)).position)
+    const [friends, setFriends] = useState(book.characters.find(char => char.id === parseInt(id)).associates)
+    const [knowledge, setKnowledge] = useState(book.characters.find(char => char.id === parseInt(id)).knowledge)
     const navigate = useNavigate()
     
     if (!user) return <h1>Please log in!</h1>
@@ -18,9 +28,7 @@ export default function CharacterPage({ state, onDeleteCharacter }) {
 
     console.log(name)
     console.log(location.state)
-    
-    
-    
+
     const character = currentBook.characters.find(char => char.id === parseInt(id))
     console.log(character)
 
@@ -40,10 +48,6 @@ export default function CharacterPage({ state, onDeleteCharacter }) {
         } catch (err) {
             console.log(err)
         }
-    }
-
-    function handleEditName() {
-        setEditName(true)
     }
 
     async function handleSubmitName(e){
@@ -74,6 +78,176 @@ export default function CharacterPage({ state, onDeleteCharacter }) {
         
     }
 
+    async function handleSubmitAppearance(e){
+        e.preventDefault()
+        console.log('edit name')
+        const updatedCharacter = ({...character, appearance: appearance})
+        console.log(updatedCharacter)
+        try {
+            const response = await fetch(`/api/characters/${character.id}/`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(updatedCharacter),
+                credentials: "include",
+            })
+        if (response.ok) {
+            const completedCharacter = await response.json()
+            console.log("updated!")
+            console.log(completedCharacter)
+            // onCompleteBook(completedCharacter)
+        } else {
+            console.log("error updating character")
+        }
+        } catch (err) {
+            console.log(err)
+        }
+        
+    }
+    
+    async function handleSubmitAppearance(e){
+        e.preventDefault()
+        console.log('edit name')
+        const updatedCharacter = ({...character, appearance: appearance})
+        console.log(updatedCharacter)
+        try {
+            const response = await fetch(`/api/characters/${character.id}/`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(updatedCharacter),
+                credentials: "include",
+            })
+        if (response.ok) {
+            const completedCharacter = await response.json()
+            console.log("updated!")
+            console.log(completedCharacter)
+            // onCompleteBook(completedCharacter)
+        } else {
+            console.log("error updating character")
+        }
+        } catch (err) {
+            console.log(err)
+        }
+        
+    }
+
+    async function handleSubmitLocations(e){
+        e.preventDefault()
+        console.log('edit name')
+        const updatedCharacter = ({...character, location: location})
+        console.log(updatedCharacter)
+        try {
+            const response = await fetch(`/api/characters/${character.id}/`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(updatedCharacter),
+                credentials: "include",
+            })
+        if (response.ok) {
+            const completedCharacter = await response.json()
+            console.log("updated!")
+            console.log(completedCharacter)
+            // onCompleteBook(completedCharacter)
+        } else {
+            console.log("error updating character")
+        }
+        } catch (err) {
+            console.log(err)
+        }
+        
+    }
+
+    async function handleSubmitPositions(e){
+        e.preventDefault()
+        console.log('edit name')
+        const updatedCharacter = ({...character, position: positions})
+        console.log(updatedCharacter)
+        try {
+            const response = await fetch(`/api/characters/${character.id}/`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(updatedCharacter),
+                credentials: "include",
+            })
+        if (response.ok) {
+            const completedCharacter = await response.json()
+            console.log("updated!")
+            console.log(completedCharacter)
+            // onCompleteBook(completedCharacter)
+        } else {
+            console.log("error updating character")
+        }
+        } catch (err) {
+            console.log(err)
+        }
+        
+    }
+
+    async function handleSubmitFriends(e){
+        e.preventDefault()
+        console.log('edit name')
+        const updatedCharacter = ({...character, associates: friends})
+        console.log(updatedCharacter)
+        try {
+            const response = await fetch(`/api/characters/${character.id}/`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(updatedCharacter),
+                credentials: "include",
+            })
+        if (response.ok) {
+            const completedCharacter = await response.json()
+            console.log("updated!")
+            console.log(completedCharacter)
+            // onCompleteBook(completedCharacter)
+        } else {
+            console.log("error updating character")
+        }
+        } catch (err) {
+            console.log(err)
+        }
+        
+    }
+
+    async function handleSubmitKnowledge(e){
+        e.preventDefault()
+        console.log('edit name')
+        const updatedCharacter = ({...character, knowledge: knowledge})
+        console.log(updatedCharacter)
+        try {
+            const response = await fetch(`/api/characters/${character.id}/`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(updatedCharacter),
+                credentials: "include",
+            })
+        if (response.ok) {
+            const completedCharacter = await response.json()
+            console.log("updated!")
+            console.log(completedCharacter)
+            // onCompleteBook(completedCharacter)
+        } else {
+            console.log("error updating character")
+        }
+        } catch (err) {
+            console.log(err)
+        }
+        
+    }
+
+    console.log(friends)
+
     return (
         <div>
             <h2>Character Info</h2>
@@ -89,22 +263,89 @@ export default function CharacterPage({ state, onDeleteCharacter }) {
                     />
                     <button>Submit</button>
                 </form>
-            : <span>Name: {character.name}  <button onClick={handleEditName}>edit</button></span>}
+            : <span>Name: {character.name}  <button onClick={e => setEditName(true)}>edit</button></span>
+            }
             <br />
 
-            <span>Appearance: {character.appearance}  <button>edit</button></span>
+            {editAppearance ? 
+                <form onSubmit={handleSubmitAppearance}>
+                    <h3>Appearance</h3>
+                    <input
+                        type="text"
+                        name="appearance"
+                        placeholder="Appearance"
+                        value={appearance}
+                        onChange={e => setAppearance(e.target.value)}
+                    />  
+                    <button>Submit</button>
+                </form>
+            : <span>Appearance: {character.appearance}  <button onClick={e => setEditAppearance(true)}>edit</button></span>
+            }
+            <br />
+            {editLocations ?
+                <form onSubmit={handleSubmitLocations}>
+                    <h3>Locations</h3>
+                    <input
+                        type="text"
+                        name="locations"
+                        placeholder="Locations"
+                        value={locations}
+                        onChange={e => setLocations(e.target.value)}
+                    />  
+                    <button>Submit</button>
+                </form>
+            
+            : <span>Locations: {character.locations}  <button onClick={e => setEditLocations(true)}>edit</button></span>
+            }
+            <br />
+            {editPositions ?
+                <form onSubmit={handleSubmitPositions}>
+                    <h3>Positions</h3>
+                    <input
+                        type="text"
+                        name="positions"
+                        placeholder="Positions/Duties"
+                        value={positions}
+                        onChange={e => setPositions(e.target.value)}
+                    />  
+                    <button>Submit</button>
+                </form>
+            : <span>Positions/Duties: {character.position}  <button onClick={(e => setEditPositions(true))}>edit</button></span>
+            }
             <br />
 
-            <span>Locations: {character.locations}  <button>edit</button></span>
-            <br />
+            {editFriends ? 
+                <form onSubmit={handleSubmitFriends}>
+                    <h3>Friends</h3>
+                    <input
+                        type="text"
+                        name="friends"
+                        placeholder="Friends/Associates"
+                        value={friends}
+                        onChange={e => setFriends(e.target.value)}
+                    />  
+                    <button>Submit</button>
+                </form>
+            : <span>Friends/Associates: {character.associates}  <button onClick={e => setEditFriends(true)}>edit</button></span>
+            }
 
-            <span>Positions/Duties: {character.position}  <button>edit</button></span>
+            
             <br />
-
-            <span>Friends/Associates: {character.associates}  <button>edit</button></span>
-            <br />
-
-            <span>Knowledge: {character.knowledge}  <button>edit</button></span>
+            {editKnowledge ?
+                <form onSubmit={handleSubmitKnowledge}>
+                    <h3>Knowledge</h3>
+                    <input
+                        type="text"
+                        name="knowledge"
+                        placeholder="Knowledge"
+                        value={knowledge}
+                        onChange={e => setKnowledge(e.target.value)}
+                    />  
+                    <button>Submit</button>
+                </form>
+            : <span>Knowledge: {character.knowledge}  <button onClick={e => setEditKnowledge(true)}>edit</button></span>
+            }
+            
             <br />
             
             <br />
