@@ -68,6 +68,21 @@ function App() {
     setUser(updatedUser)
   }
 
+  function handleUpdateCharacter(currentBook, charInfoObj) {
+    console.log("inapp", charInfoObj)
+    const characterBook = user.books.find(book => book.id === currentBook.id)
+    // console.log(characterBook)
+    const currentCharacter = characterBook.characters.find(char => char.id === charInfoObj.id)
+    // console.log(currentCharacter)
+    const updatedCharacter = {...currentCharacter, [charInfoObj.element]: charInfoObj.value}
+    console.log(updatedCharacter)
+    const updatedCharacterList = characterBook.characters.map(char => char.id === updatedCharacter.id ? updatedCharacter : char)
+    const updatedBook = {...characterBook, characters: updatedCharacterList}
+    const updatedBooks = user.books.map(book => book.id === updatedBook.id ? updatedBook : book)
+    const updatedUser = ({...user, books: updatedBooks})
+    setUser(updatedUser)
+  }
+
   return (
     <div className="App">
       <NavLink to="/login">Login</NavLink>
@@ -81,7 +96,7 @@ function App() {
         <Route path="/books" element={<BookList onDeleteBook={handleDeleteBook} onCompleteBook={handleCompleteBook}/>} />
         <Route path="/books/new" element={<AddBook onAddBook={handleAddBook}/>} />
         <Route path="/books/:id" element={<BookPage />} />
-        <Route path="/books/:id/characters/:id" element={<CharacterPage onDeleteCharacter={handleDeleteCharacter}/>} />
+        <Route path="/books/:id/characters/:id" element={<CharacterPage onDeleteCharacter={handleDeleteCharacter} onUpdateCharacter={handleUpdateCharacter}/>} />
         <Route path="/books/:id/characters/new" element={<AddCharacter onAddCharacter={handleAddCharacter}/>} />
         <Route path="/books/:id/characters/:id/edit" element={<EditCharacter />} />
 
