@@ -1,10 +1,10 @@
-import { useState, useContext } from "react"
+import { useState, useEffect, useContext } from "react"
 import { useParams, useLocation, NavLink, useNavigate } from "react-router-dom"
 import { UserContext } from "./UserContext"
 import EditCharacter from "./EditCharacter"
 
 export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharacter }) {
-    const {user} = useContext(UserContext)
+    const {user, setUser} = useContext(UserContext)
     const {id} = useParams()
     const location = useLocation()
     const {book = null} = location.state
@@ -22,15 +22,47 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
     const [friends, setFriends] = useState(book.characters.find(char => char.id === parseInt(id)).associates)
     const [knowledge, setKnowledge] = useState(book.characters.find(char => char.id === parseInt(id)).knowledge)
     const navigate = useNavigate()
-    
+
+    useEffect(() => {
+        fetch("/api/me/", {
+            method: "GET",
+        }).then((resp) => {
+            if (resp.ok) {
+                resp.json().then((user) => setUser(user))
+            } else {
+                console.log(resp)
+            }
+        })
+    }, [name, appearance, locations, positions, friends, knowledge])
+
     if (!user) return <h1>Please log in!</h1>
     if (book === null) return <h1>please go home</h1>
 
-    console.log(name)
-    console.log(location.state)
+    // useEffect( () => {
+    //     try {
+    //         const response = await fetch(`/api/characters/${id}/`, {
+    //             method: "GET",
+    //             headers: {
+    //                 "Content-Type": "application/json"
+    //             },
+    //             credentials: "include",
+    //         })
+    //     if (response.ok) {
+    //         const currentCharacter = await response.json()
+    //         console.log(currentCharacter)
+    //     } else {
+    //         console.log("error updating character")
+    //     }
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }, [name, appearance, locations, positions, friends, knowledge])
+
+
 
     const character = currentBook.characters.find(char => char.id === parseInt(id))
-    console.log(character)
+
+    console.log(editName)
 
     // const character = user.books.find(char => char.id === parseInt(id))
 
@@ -52,9 +84,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
 
     async function handleSubmitName(e){
         e.preventDefault()
-        console.log('edit name')
         const updatedCharacter = ({...character, name: name})
-        console.log(updatedCharacter)
         try {
             const response = await fetch(`/api/characters/${character.id}/`, {
                 method: "PUT",
@@ -66,8 +96,6 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
             })
         if (response.ok) {
             const completedCharacter = await response.json()
-            console.log("updated!")
-            console.log(completedCharacter)
             handleUpdateCharacter(completedCharacter.id, "name", name)
             setEditName(false)
         } else {
@@ -76,14 +104,11 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
         } catch (err) {
             console.log(err)
         }
-        
     }
 
     async function handleSubmitAppearance(e){
         e.preventDefault()
-        console.log('edit name')
         const updatedCharacter = ({...character, appearance: appearance})
-        console.log(updatedCharacter)
         try {
             const response = await fetch(`/api/characters/${character.id}/`, {
                 method: "PUT",
@@ -95,9 +120,8 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
             })
         if (response.ok) {
             const completedCharacter = await response.json()
-            console.log("updated!")
-            console.log(completedCharacter)
             handleUpdateCharacter(completedCharacter.id, "appearance", appearance)
+            setEditAppearance(false)
         } else {
             console.log("error updating character")
         }
@@ -109,9 +133,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
 
     async function handleSubmitLocations(e){
         e.preventDefault()
-        console.log('edit name')
         const updatedCharacter = ({...character, locations: locations})
-        console.log(updatedCharacter)
         try {
             const response = await fetch(`/api/characters/${character.id}/`, {
                 method: "PUT",
@@ -123,8 +145,6 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
             })
         if (response.ok) {
             const completedCharacter = await response.json()
-            console.log("updated!")
-            console.log(completedCharacter)
             handleUpdateCharacter(completedCharacter.id, "locations", locations)
             // onCompleteBook(completedCharacter)
         } else {
@@ -138,7 +158,6 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
 
     async function handleSubmitPositions(e){
         e.preventDefault()
-        console.log('edit name')
         const updatedCharacter = ({...character, position: positions})
         console.log(updatedCharacter)
         try {
@@ -152,8 +171,6 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
             })
         if (response.ok) {
             const completedCharacter = await response.json()
-            console.log("updated!")
-            console.log(completedCharacter)
             handleUpdateCharacter(completedCharacter.id, "position", positions)
             // onCompleteBook(completedCharacter)
         } else {
@@ -167,9 +184,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
 
     async function handleSubmitFriends(e){
         e.preventDefault()
-        console.log('edit name')
         const updatedCharacter = ({...character, associates: friends})
-        console.log(updatedCharacter)
         try {
             const response = await fetch(`/api/characters/${character.id}/`, {
                 method: "PUT",
@@ -181,8 +196,6 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
             })
         if (response.ok) {
             const completedCharacter = await response.json()
-            console.log("updated!")
-            console.log(completedCharacter)
             handleUpdateCharacter(completedCharacter.id, "associates", friends)
             // onCompleteBook(completedCharacter)
         } else {
@@ -196,9 +209,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
 
     async function handleSubmitKnowledge(e){
         e.preventDefault()
-        console.log('edit name')
         const updatedCharacter = ({...character, knowledge: knowledge})
-        console.log(updatedCharacter)
         try {
             const response = await fetch(`/api/characters/${character.id}/`, {
                 method: "PUT",
@@ -210,8 +221,6 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
             })
         if (response.ok) {
             const completedCharacter = await response.json()
-            console.log("updated!")
-            console.log(completedCharacter)
             handleUpdateCharacter(completedCharacter.id, "knowledge", knowledge)
             // handleUpdateCharacter(knowledge)
             // onCompleteBook(completedCharacter)

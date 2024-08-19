@@ -71,16 +71,14 @@ function App() {
   function handleUpdateCharacter(currentBook, charInfoObj) {
     console.log("inapp", charInfoObj)
     const characterBook = user.books.find(book => book.id === currentBook.id)
-    // console.log(characterBook)
     const currentCharacter = characterBook.characters.find(char => char.id === charInfoObj.id)
-    // console.log(currentCharacter)
     const updatedCharacter = {...currentCharacter, [charInfoObj.element]: charInfoObj.value}
-    console.log(updatedCharacter)
     const updatedCharacterList = characterBook.characters.map(char => char.id === updatedCharacter.id ? updatedCharacter : char)
     const updatedBook = {...characterBook, characters: updatedCharacterList}
-    const updatedBooks = user.books.map(book => book.id === updatedBook.id ? updatedBook : book)
+    const updatedBooks = user.books.map(book => book.id === currentBook.id ? updatedBook : book)
     const updatedUser = ({...user, books: updatedBooks})
     setUser(updatedUser)
+    console.log("in app after updating user", updatedUser)
   }
 
   return (
@@ -90,14 +88,14 @@ function App() {
       <NavLink to="/books">My Books</NavLink>
 
       <Routes>
-        <Route path="/" element={<Home onDeleteBook={handleDeleteBook}/>} />
-        <Route path="/login" element={<Login onAddBooks={handleFetchBooks}/>} />
+        <Route path="/" element={<Home onDeleteBook={handleDeleteBook} />} />
+        <Route path="/login" element={<Login onAddBooks={handleFetchBooks} />} />
         <Route path="/logout" element={<Logout />} />
-        <Route path="/books" element={<BookList onDeleteBook={handleDeleteBook} onCompleteBook={handleCompleteBook}/>} />
-        <Route path="/books/new" element={<AddBook onAddBook={handleAddBook}/>} />
+        <Route path="/books" element={<BookList onDeleteBook={handleDeleteBook} onCompleteBook={handleCompleteBook} />} />
+        <Route path="/books/new" element={<AddBook onAddBook={handleAddBook} />} />
         <Route path="/books/:id" element={<BookPage />} />
         <Route path="/books/:id/characters/:id" element={<CharacterPage onDeleteCharacter={handleDeleteCharacter} onUpdateCharacter={handleUpdateCharacter}/>} />
-        <Route path="/books/:id/characters/new" element={<AddCharacter onAddCharacter={handleAddCharacter}/>} />
+        <Route path="/books/:id/characters/new" element={<AddCharacter onAddCharacter={handleAddCharacter} />} />
         <Route path="/books/:id/characters/:id/edit" element={<EditCharacter />} />
 
       </Routes>
