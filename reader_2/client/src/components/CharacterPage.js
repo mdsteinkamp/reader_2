@@ -10,7 +10,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
     const {book = null} = location.state
     const [currentBook] = useState(book)
     const [editName, setEditName] = useState(false)
-    const [editAppearance, setEditAppearance] = useState(false)
+    const [editAppearance, setEditAppearance] = useState(false) 
     const [editLocations, setEditLocations] = useState(false)
     const [editPositions, setEditPositions] = useState(false)
     const [editFriends, setEditFriends] = useState(false)
@@ -33,7 +33,9 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
                 console.log(resp)
             }
         })
-    }, [name, appearance, locations, positions, friends, knowledge])
+    }, [])
+
+    console.log(location)
 
     if (!user) return <h1>Please log in!</h1>
     if (book === null) return <h1>please go home</h1>
@@ -98,6 +100,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
             const completedCharacter = await response.json()
             handleUpdateCharacter(completedCharacter.id, "name", name)
             setEditName(false)
+            window.location.reload()
         } else {
             console.log("error updating character")
         }
