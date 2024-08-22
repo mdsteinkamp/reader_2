@@ -30,6 +30,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
         }).then((resp) => {
             if (resp.ok) {
                 resp.json().then((char) => {
+                    console.log("used fetch")
                     setCharacter(char)
                     setName(char.name)
                     setAppearance(char.appearance)
@@ -43,11 +44,6 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
             }
         })
     }, [location])
-
-    console.log(location)
-    console.log("in char page", user)
-    console.log(character)
-    // console.log(location.state.bookID)
 
     if (!user, !character) return <h1>Please log in!</h1>
     if (location.state.bookID === null) return <h1>please go home</h1>
@@ -186,7 +182,6 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
     async function handleSubmitPositions(e){
         e.preventDefault()
         const updatedCharacter = ({...character, position: positions})
-        console.log(updatedCharacter)
         try {
             const response = await fetch(`/api/characters/${character.id}/`, {
                 method: "PUT",

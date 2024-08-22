@@ -13,6 +13,7 @@ export default function BookPage() {
 
 
     const book = user.books.find(book => book.id === parseInt(id))
+    const sortedCharacters = book.characters.sort((a, b) => a.name.localeCompare(b.name))
     // const bookID = book.id
 
     return (
@@ -22,7 +23,7 @@ export default function BookPage() {
             <h1>Characters</h1>
             <br />
             <NavLink to={`/books/${book.id}/characters/new`} state={{ book }} element={<AddCharacter />}>Add Character</NavLink>
-            <ul>{book.characters.map(character => (
+            <ul>{sortedCharacters.map(character => (
                     <div key={character.id}>
                     <NavLink to={`characters/${character.id}/`} state={{ location, bookID: book.id, characterID: character.id }}>
                         <h4>{character.name}</h4>
