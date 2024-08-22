@@ -18,7 +18,6 @@ export default function AddCharacter({ state, onAddCharacter }) {
       const [errors, setErrors] = useState([])
 
     if (!user) return <h1>Please log in!</h1>
-    console.log(book)
 
     // const book = user.books.find(book => book.id === parseInt(id))
 
