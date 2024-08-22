@@ -13,6 +13,7 @@ export default function BookPage() {
 
 
     const book = user.books.find(book => book.id === parseInt(id))
+    // const bookID = book.id
 
     return (
         <div>
@@ -23,7 +24,7 @@ export default function BookPage() {
             <NavLink to={`/books/${book.id}/characters/new`} state={{ book }} element={<AddCharacter />}>Add Character</NavLink>
             <ul>{book.characters.map(character => (
                     <div key={character.id}>
-                    <NavLink to={`characters/${character.id}/`} state={{ location, book }}>
+                    <NavLink to={`characters/${character.id}/`} state={{ location, bookID: book.id, characterID: character.id }}>
                         <h4>{character.name}</h4>
                         </NavLink>
                     </div>

@@ -10,7 +10,7 @@ function UserProvider({ children }) {
     const jwtSecret = 'dontkeepthisinsettingsinfuture'
     
     const token = localStorage.getItem("jwt")
-    console.log(token)
+    // console.log(token)
 
     // useEffect(() => {
     //     setJwt(jwtDecode(token))

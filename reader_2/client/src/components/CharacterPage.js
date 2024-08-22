@@ -7,38 +7,64 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
     const {user, setUser} = useContext(UserContext)
     const {id} = useParams()
     const location = useLocation()
-    const {book = null} = location.state
-    const [currentBook] = useState(book)
+    // const {bookID = null} = state
+    // const [currentBook, setCurrentBook] = useState(null)
     const [editName, setEditName] = useState(false)
     const [editAppearance, setEditAppearance] = useState(false) 
     const [editLocations, setEditLocations] = useState(false)
     const [editPositions, setEditPositions] = useState(false)
     const [editFriends, setEditFriends] = useState(false)
     const [editKnowledge, setEditKnowledge] = useState(false)
-    const [name, setName] = useState(book.characters.find(char => char.id === parseInt(id)).name)
-    const [appearance, setAppearance] = useState(book.characters.find(char => char.id === parseInt(id)).appearance)
-    const [locations, setLocations] = useState(book.characters.find(char => char.id === parseInt(id)).locations)
-    const [positions, setPositions] = useState(book.characters.find(char => char.id === parseInt(id)).position)
-    const [friends, setFriends] = useState(book.characters.find(char => char.id === parseInt(id)).associates)
-    const [knowledge, setKnowledge] = useState(book.characters.find(char => char.id === parseInt(id)).knowledge)
+    const [name, setName] = useState(null)
+    const [appearance, setAppearance] = useState()
+    const [locations, setLocations] = useState(null)
+    const [positions, setPositions] = useState(null)
+    const [friends, setFriends] = useState(null)
+    const [knowledge, setKnowledge] = useState(null)
+    const [character, setCharacter] = useState(null)
     const navigate = useNavigate()
 
     useEffect(() => {
-        fetch("/api/me/", {
+        fetch(`/api/characters/${location.state.characterID}`, {
             method: "GET",
         }).then((resp) => {
             if (resp.ok) {
-                resp.json().then((user) => setUser(user))
+                resp.json().then((char) => {
+                    setCharacter(char)
+                    setName(char.name)
+                    setAppearance(char.appearance)
+                    setLocations(char.locations)
+                    setPositions(char.position)
+                    setFriends(char.associates)
+                    setKnowledge(char.knowledge)
+                })
             } else {
                 console.log(resp)
             }
         })
-    }, [])
+    }, [location])
 
     console.log(location)
+    console.log("in char page", user)
+    console.log(character)
+    // console.log(location.state.bookID)
 
-    if (!user) return <h1>Please log in!</h1>
-    if (book === null) return <h1>please go home</h1>
+    if (!user, !character) return <h1>Please log in!</h1>
+    if (location.state.bookID === null) return <h1>please go home</h1>
+
+    const currentBook = user.books.find(b => b.id === location.state.bookID)
+
+    // setName(currentBook.characters.find(char => char.id === parseInt(id)).name)
+    // setAppearance(currentBook.characters.find(char => char.id === parseInt(id)).appearance)
+    // setLocations(currentBook.characters.find(char => char.id === parseInt(id)).locations)
+    // setPositions(currentBook.characters.find(char => char.id === parseInt(id)).position)
+    // setFriends(currentBook.characters.find(char => char.id === parseInt(id)).associates)
+    // setKnowledge(currentBook.characters.find(char => char.id === parseInt(id)).knowledge)
+
+    // setCurrentBook(user.books.find(b => b.id === location.state.bookID))
+
+    // const currentBook = user.books.find(b => b.id === location.state.bookID)
+    // console.log("in char page", currentBook)
 
     // useEffect( () => {
     //     try {
@@ -62,9 +88,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
 
 
 
-    const character = currentBook.characters.find(char => char.id === parseInt(id))
-
-    console.log(editName)
+    // const character = currentBook.characters.find(char => char.id === parseInt(id))
 
     // const character = user.books.find(char => char.id === parseInt(id))
 
@@ -74,7 +98,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
                 method: "DELETE"
             })
         if (response.ok) {
-            onDeleteCharacter(book, character)
+            onDeleteCharacter(currentBook, character)
         } else {
             console.log("could not find the character")
         }
@@ -149,7 +173,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
         if (response.ok) {
             const completedCharacter = await response.json()
             handleUpdateCharacter(completedCharacter.id, "locations", locations)
-            // onCompleteBook(completedCharacter)
+            setEditLocations(false)
         } else {
             console.log("error updating character")
         }
@@ -175,7 +199,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
         if (response.ok) {
             const completedCharacter = await response.json()
             handleUpdateCharacter(completedCharacter.id, "position", positions)
-            // onCompleteBook(completedCharacter)
+            setEditPositions(false)
         } else {
             console.log("error updating character")
         }
@@ -200,7 +224,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
         if (response.ok) {
             const completedCharacter = await response.json()
             handleUpdateCharacter(completedCharacter.id, "associates", friends)
-            // onCompleteBook(completedCharacter)
+            setEditFriends(false)
         } else {
             console.log("error updating character")
         }
@@ -225,8 +249,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
         if (response.ok) {
             const completedCharacter = await response.json()
             handleUpdateCharacter(completedCharacter.id, "knowledge", knowledge)
-            // handleUpdateCharacter(knowledge)
-            // onCompleteBook(completedCharacter)
+            setEditKnowledge(false)
         } else {
             console.log("error updating character")
         }
@@ -238,8 +261,10 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
 
     function handleUpdateCharacter(id, attrib, value) {
         const charInfoObj = {id: id, element: attrib, value: value}
-        onUpdateCharacter(book, charInfoObj)
+        onUpdateCharacter(currentBook, charInfoObj)
     }
+
+    // return (<p>hi</p>)
 
     return (
         <div>
@@ -256,7 +281,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
                     />
                     <button>Submit</button>
                 </form>
-            : <span>Name: {character.name}  <button onClick={e => setEditName(true)}>edit</button></span>
+            : <span>Name: {name}  <button onClick={e => setEditName(true)}>edit</button></span>
             }
             <br />
 
@@ -272,7 +297,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
                     />  
                     <button>Submit</button>
                 </form>
-            : <span>Appearance: {character.appearance}  <button onClick={e => setEditAppearance(true)}>edit</button></span>
+            : <span>Appearance: {appearance}  <button onClick={e => setEditAppearance(true)}>edit</button></span>
             }
             <br />
             {editLocations ?
@@ -288,7 +313,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
                     <button>Submit</button>
                 </form>
             
-            : <span>Locations: {character.locations}  <button onClick={e => setEditLocations(true)}>edit</button></span>
+            : <span>Locations: {locations}  <button onClick={e => setEditLocations(true)}>edit</button></span>
             }
             <br />
             {editPositions ?
@@ -303,7 +328,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
                     />  
                     <button>Submit</button>
                 </form>
-            : <span>Positions/Duties: {character.position}  <button onClick={(e => setEditPositions(true))}>edit</button></span>
+            : <span>Positions/Duties: {positions}  <button onClick={(e => setEditPositions(true))}>edit</button></span>
             }
             <br />
 
@@ -319,7 +344,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
                     />  
                     <button>Submit</button>
                 </form>
-            : <span>Friends/Associates: {character.associates}  <button onClick={e => setEditFriends(true)}>edit</button></span>
+            : <span>Friends/Associates: {friends}  <button onClick={e => setEditFriends(true)}>edit</button></span>
             }
 
             
@@ -336,7 +361,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
                     />  
                     <button>Submit</button>
                 </form>
-            : <span>Knowledge: {character.knowledge}  <button onClick={e => setEditKnowledge(true)}>edit</button></span>
+            : <span>Knowledge: {knowledge}  <button onClick={e => setEditKnowledge(true)}>edit</button></span>
             }
             
             <br />

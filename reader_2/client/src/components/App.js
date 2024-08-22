@@ -19,7 +19,7 @@ function App() {
   const {user, setUser} = useContext(UserContext)
   const [books, setBooks] = useState([])
 
-  console.log(user)
+  // console.log(user)
 
   
 
