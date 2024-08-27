@@ -13,8 +13,8 @@ export default function BookPage() {
 
 
     const book = user.books.find(book => book.id === parseInt(id))
+    if (!book) return <h1>Not your book!</h1>
     const sortedCharacters = book.characters.sort((a, b) => a.name.localeCompare(b.name))
-    // const bookID = book.id
 
     return (
         <div>
