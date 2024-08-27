@@ -1,4 +1,5 @@
 import { useState, useContext } from "react"
+import { useNavigate } from "react-router-dom"
 import { UserContext } from "./UserContext"
 
 export default function Login({ onAddBooks }) {
@@ -7,6 +8,7 @@ export default function Login({ onAddBooks }) {
     const [errors, setErrors] = useState([])
     const [token, setToken] = useState(localStorage.getItem("jwt"))
     const {user, setUser} = useContext(UserContext)
+    const navigate = useNavigate()
 
     function handleChange(e) {
         const name = e.target.name
@@ -38,7 +40,9 @@ export default function Login({ onAddBooks }) {
             resp.json().then((user) => {
               setUser(user)
               console.log(user)
-              getBooks()
+              // getBooks()
+              navigate("/books")
+
           })} else {
             resp.json().then(e => {
               setErrors(e.errors)

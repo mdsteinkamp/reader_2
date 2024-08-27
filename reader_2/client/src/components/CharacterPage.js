@@ -45,6 +45,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
         })
     }, [location])
 
+
     if (!user, !character) return <h1>Please log in!</h1>
     if (location.state.bookID === null) return <h1>please go home</h1>
 
