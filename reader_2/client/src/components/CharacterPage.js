@@ -22,10 +22,14 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
     const [friends, setFriends] = useState(null)
     const [knowledge, setKnowledge] = useState(null)
     const [character, setCharacter] = useState(null)
+    const [errors, setErrors] = useState([])
+    const [renderErrors, setRenderErrors] = useState(false)
     const navigate = useNavigate()
 
+    console.log(id)
+
     useEffect(() => {
-        fetch(`/api/characters/${location.state.characterID}`, {
+        fetch(`/api/characters/${id}`, {
             method: "GET",
         }).then((resp) => {
             if (resp.ok) {
@@ -41,12 +45,19 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
                 })
             } else {
                 console.log(resp)
+                setErrors(errors.push(resp))
+                setRenderErrors(true)
+                return
             }
         })
     }, [location])
+    console.log(character)
+    console.log(errors, renderErrors)
 
 
     if (!user, !character) return <h1>Please log in!</h1>
+    if (errors.length > 0) return (<h1>{errors}</h1>)
+
     // if (location.state.bookID === null) return <h1>please go home</h1>
 
     const currentBook = user.books.find(b => b.id === location.state.bookID)
@@ -260,6 +271,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
         const charInfoObj = {id: id, element: attrib, value: value}
         onUpdateCharacter(currentBook, charInfoObj)
     }
+
 
     return (
         <div>

@@ -30,10 +30,16 @@ class CharacterCreateListApi(views.APIView):
 
 class CharacterRetrieveUpdateDelete(views.APIView):
     authentication_classes = (authentication.CustomUserAuthentication,)
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, character_id):
         character = services.get_book_character_detail(character_id=character_id)
+        print(character.book.user)
+        print(request.user)
+        if character.book.user != request.user:
+            print(True)
+            return response.Response(data="not authorized to view this character")
+        
         serializer = character_serializer.CharacterSerializer(character)
         return response.Response(data=serializer.data)
     

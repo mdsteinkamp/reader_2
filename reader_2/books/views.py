@@ -6,7 +6,7 @@ from . import services
 from user import authentication
 
 class BookCreateListApi(views.APIView):
-    authentication_classes = (authentication.CustomUserAuthentication,)
+    # authentication_classes = (authentication.CustomBookAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request):
@@ -26,15 +26,24 @@ class BookCreateListApi(views.APIView):
     
 class BookRetrieveUpdateDelete(views.APIView):
     authentication_classes = (authentication.CustomUserAuthentication,)
-    permission_classes = (permissions.IsAuthenticated,)
+
+    # permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, book_id):
+        # if not request.user.has_perm("books.view_book"):
+        #     return response.Response(data="no luck")
         # user = request.user
         # book = user.books.all().get(id=book_id)
         # book = user.books.
         # book = books.services.get_user_book_detail(book_id=book_id)
+
         book = services.get_user_book_detail(book_id=book_id)
-        # print(book.character_set())
+        print(book.user)
+        print(request.user)
+        if book.user != request.user:
+            print(True)
+            return response.Response(data="not authorized to view this book")
+
 
         # characters = book.characters.all()
         # print(characters)
