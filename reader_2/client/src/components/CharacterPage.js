@@ -22,7 +22,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
     const [friends, setFriends] = useState(null)
     const [knowledge, setKnowledge] = useState(null)
     const [character, setCharacter] = useState(null)
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState("")
     const [renderErrors, setRenderErrors] = useState(false)
     const navigate = useNavigate()
 
@@ -45,18 +45,19 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
                 })
             } else {
                 console.log(resp)
-                setErrors(errors.push(resp))
+                // setErrors(resp)
                 setRenderErrors(true)
                 return
             }
         })
     }, [location])
+
     console.log(character)
     console.log(errors, renderErrors)
 
 
     if (!user, !character) return <h1>Please log in!</h1>
-    if (errors.length > 0) return (<h1>{errors}</h1>)
+    if (character === "not authorized to view this character") return (<h1>not authorized to view this character</h1>)
 
     // if (location.state.bookID === null) return <h1>please go home</h1>
 
