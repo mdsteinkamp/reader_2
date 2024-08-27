@@ -47,7 +47,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
 
 
     if (!user, !character) return <h1>Please log in!</h1>
-    if (location.state.bookID === null) return <h1>please go home</h1>
+    // if (location.state.bookID === null) return <h1>please go home</h1>
 
     const currentBook = user.books.find(b => b.id === location.state.bookID)
 
@@ -259,8 +259,6 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
         const charInfoObj = {id: id, element: attrib, value: value}
         onUpdateCharacter(currentBook, charInfoObj)
     }
-
-    // return (<p>hi</p>)
 
     return (
         <div>

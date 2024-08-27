@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react'
-import { Route, Routes, NavLink } from 'react-router-dom'
+import { Route, Routes, NavLink, Navigate, useNavigate } from 'react-router-dom'
 import { UserContext } from './UserContext'
 import '../App.css';
 import Login from './Login'
@@ -18,6 +18,7 @@ function App() {
   // const [token, setToken] = useState(localStorage.getItem("jwt"))
   const {user, setUser} = useContext(UserContext)
   const [books, setBooks] = useState([])
+  const navigate = useNavigate()
 
   // console.log(user)
 
