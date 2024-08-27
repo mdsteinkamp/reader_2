@@ -96,6 +96,7 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
             })
         if (response.ok) {
             onDeleteCharacter(currentBook, character)
+            navigate(`/books/${currentBook.id}`)
         } else {
             console.log("could not find the character")
         }

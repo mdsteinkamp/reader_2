@@ -1,5 +1,5 @@
 import { useState, useContext } from "react"
-import { useParams, useLocation } from "react-router-dom"
+import { useParams, useLocation, useNavigate } from "react-router-dom"
 import { UserContext } from "./UserContext"
 
 export default function AddCharacter({ state, onAddCharacter }) {
@@ -15,7 +15,8 @@ export default function AddCharacter({ state, onAddCharacter }) {
         position: "",
         knowledge: "",
       })
-      const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState([])
+    const navigate = useNavigate()
 
     if (!user) return <h1>Please log in!</h1>
 
@@ -47,6 +48,7 @@ export default function AddCharacter({ state, onAddCharacter }) {
             resp.json().then(character => {
 
                 handleAddCharacter(character)
+                navigate(`/books/${book.id}`)
             })
           } else {
             resp.json().then(e => {
