@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import views, response, permissions, status as rest_status
+from rest_framework.permissions import SAFE_METHODS, BasePermission
 
 from . import models
 from . import services
@@ -7,9 +8,22 @@ from . import serializers as character_serializer
 
 from user import authentication
 
+class CharacterPermission(BasePermission):
+    message = "can not do this"
+
+    def has_object_permission(self, request, view, obj):
+
+        print("in char perm class", obj.book, request.user)
+        
+        if request.method in SAFE_METHODS:
+            return True
+        
+        return obj.book.user == request.user
+        
+
 class CharacterCreateListApi(views.APIView):
     authentication_classes = (authentication.CustomUserAuthentication,)
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (CharacterPermission,)
 
     def post(self, request):
         # print(request.data["book"])
@@ -30,15 +44,15 @@ class CharacterCreateListApi(views.APIView):
 
 class CharacterRetrieveUpdateDelete(views.APIView):
     authentication_classes = (authentication.CustomUserAuthentication,)
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (CharacterPermission,)
 
     def get(self, request, character_id):
         character = services.get_book_character_detail(character_id=character_id)
-        print(character.book.user)
-        print(request.user)
-        if character.book.user != request.user:
-            print(True)
-            return response.Response(data="not authorized to view this character")
+        # print(character.book.user)
+        # print(request.user)
+        # if character.book.user != request.user:
+        #     print(True)
+        #     return response.Response(data="not authorized to view this character")
         
         serializer = character_serializer.CharacterSerializer(character)
         return response.Response(data=serializer.data)

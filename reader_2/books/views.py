@@ -23,8 +23,8 @@ class BookPermission(BasePermission):
 
 
 class BookCreateListApi(views.APIView):
-    # authentication_classes = (authentication.CustomBookAuthentication,)
-    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (authentication.CustomUserAuthentication,)
+    permission_classes = (authentication.CustomUserAuthentication,)
 
     def post(self, request):
         serializer = book_serializer.BookSerializer(data=request.data)
