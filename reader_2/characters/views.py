@@ -23,7 +23,7 @@ class CharacterPermission(BasePermission):
 
 class CharacterCreateListApi(views.APIView):
     authentication_classes = (authentication.CustomUserAuthentication,)
-    permission_classes = (CharacterPermission,)
+    permission_classes = (authentication.CustomUserAuthentication,)
 
     def post(self, request):
         # print(request.data["book"])
