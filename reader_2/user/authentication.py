@@ -46,7 +46,7 @@ class CustomUserAuthentication(authentication.BaseAuthentication):
 
     def has_object_permission(self, request, view, obj):
 
-        print("in char perm class", obj.book, request.user)
+        print("in auth.py has_obj_perm")
         
         if request.method in SAFE_METHODS:
             return True

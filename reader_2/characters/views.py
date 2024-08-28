@@ -38,7 +38,7 @@ class CharacterCreateListApi(views.APIView):
 
     def get(self, request):
         # print(request)
-        character_collection = models.Character.characters.all()
+        character_collection = services.get_user_characters(request.user)
         serializer = character_serializer.CharacterSerializer(character_collection, many=True)
         return response.Response(data=serializer.data)
 

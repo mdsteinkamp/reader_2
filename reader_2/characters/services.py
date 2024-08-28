@@ -38,8 +38,14 @@ class CharacterDataClass:
             book=character_model.book
         )
     
+def get_user_characters(user):
+    characters = character_models.Character.characters.filter(book__user=user)
+
+    return [CharacterDataClass.from_instance(character) for character in characters]
+
+    
 def get_book_characters(book: "Book") -> list["CharacterDataClass"]:
-    character_books = character_models.Character.characters.filter(book=book)
+    character_books = character_models.characters.filter(book=book)
     
     return [CharacterDataClass.from_instance(character) for character in character_books]
 

@@ -17,10 +17,6 @@ class BookPermission(BasePermission):
             return True
         
         return obj.user == request.user
-        
-
-        
-
 
 class BookCreateListApi(views.APIView):
     authentication_classes = (authentication.CustomUserAuthentication,)
