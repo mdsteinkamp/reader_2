@@ -1,9 +1,26 @@
 from rest_framework import views, response, permissions, status as rest_status
+from rest_framework.permissions import SAFE_METHODS, BasePermission
 
 from . import serializers as book_serializer
 from . import services
 
 from user import authentication
+
+class BookPermission(BasePermission):
+    message = "can not do this"
+
+    def has_object_permission(self, request, view, obj):
+
+        print("in perm class", obj.user, request.user)
+        
+        if request.method in SAFE_METHODS:
+            return True
+        
+        return obj.user == request.user
+        
+
+        
+
 
 class BookCreateListApi(views.APIView):
     # authentication_classes = (authentication.CustomBookAuthentication,)
@@ -27,7 +44,7 @@ class BookCreateListApi(views.APIView):
 class BookRetrieveUpdateDelete(views.APIView):
     authentication_classes = (authentication.CustomUserAuthentication,)
 
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (BookPermission,)
 
     def get(self, request, book_id):
         # if not request.user.has_perm("books.view_book"):
@@ -38,11 +55,11 @@ class BookRetrieveUpdateDelete(views.APIView):
         # book = books.services.get_user_book_detail(book_id=book_id)
 
         book = services.get_user_book_detail(book_id=book_id)
-        print(book.user)
-        print(request.user)
-        if book.user != request.user:
-            print(True)
-            return response.Response(data="not authorized to view this book")
+        # print(book.user)
+        # print(request.user)
+        # if book.user != request.user:
+        #     print(True)
+        #     return response.Response(data="not authorized to view this book")
 
 
         # characters = book.characters.all()

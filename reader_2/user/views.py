@@ -17,6 +17,7 @@ class RegisterApi(views.APIView):
     
 class LoginApi(views.APIView):
 
+
     def post(self, request):
         username = request.data["username"]
         password = request.data["password"]
