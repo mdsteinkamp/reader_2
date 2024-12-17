@@ -1,12 +1,17 @@
 import { useState, useContext } from "react"
 import { useParams, useLocation, useNavigate } from "react-router-dom"
 import { UserContext } from "./UserContext"
+import Select from 'react-select'
+import { CharactersContext } from "./CharactersContext"
 
 export default function AddCharacter({ state, onAddCharacter }) {
     const {user} = useContext(UserContext)
+    const {characters} = useContext(CharactersContext)
     const {id} = useParams()
     const location = useLocation()
     const {book} = location.state
+    const [selectedNameOption, setSelectedNameOption] = useState("")
+    const [selectedCharacter, setSelectedCharacter] = useState(null)
     const [formData, setFormData] = useState({
         name: "",
         appearance: "",
@@ -17,8 +22,16 @@ export default function AddCharacter({ state, onAddCharacter }) {
       })
     const [errors, setErrors] = useState([])
     const navigate = useNavigate()
+    
+    const options = characters.map(char => (
+      {
+        value: char.name,
+        label: char.name,
+        id: char.id
+    }))
 
     if (!user) return <h1>Please log in!</h1>
+
 
     // const book = user.books.find(book => book.id === parseInt(id))
 
@@ -62,17 +75,40 @@ export default function AddCharacter({ state, onAddCharacter }) {
     function handleAddCharacter(newCharacter) {
       onAddCharacter(book, newCharacter)
     }
+
+    function handleSelectNameOption(option) {
+      setSelectedNameOption(option)
+      const char = characters.find(char => char.id === option.id)
+      setSelectedCharacter(char)
+      setFormData({
+        book: book,
+        name: char.name,
+        appearance: char.appearance,
+        locations: char.locations,
+        associates: char.associates,
+        position: char.position,
+        knowledge: char.knowledge,
+      })
+    }
     
     return (
         <div>
             <h1>Add Characer</h1>
+            <h2>search existing characters:</h2>
+            <Select 
+              value={selectedNameOption}
+              options={options}
+              onChange={option => handleSelectNameOption(option)}
+            />
+
+            <br />
+
             <form onSubmit={handleSubmit}>
-                <h3>Name</h3>
                 <input
                     type="text"
                     name="name"
                     placeholder="Name"
-                    value={formData.title}
+                    value={formData.name}
                     onChange={handleChange}
                 />
                 <br /> 

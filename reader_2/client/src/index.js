@@ -4,13 +4,16 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css';
 import App from './components/App';
 import { UserProvider } from './components/UserContext'
+import { CharactersProvider } from './components/CharactersContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <UserProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <CharactersProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </CharactersProvider>
   </UserProvider>
 );
 
