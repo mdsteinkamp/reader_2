@@ -56,6 +56,15 @@ def get_book_character_detail(character_id: int) -> "CharacterDataClass":
 
 def create_character(book, character: "CharacterDataClass") -> "CharacterDataClass":
     print(book)
+    print(character.name)
+
+    found_character = character_models.Character.characters.filter(name=character.name)
+
+    if found_character:
+        print("found a character!", found_character)
+    else: 
+        print("no char found")
+
     create_character = character_models.Character.characters.create(
         name=character.name,
         appearance=character.appearance,
