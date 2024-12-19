@@ -56,21 +56,22 @@ def get_book_character_detail(character_id: int) -> "CharacterDataClass":
 
 def create_character(book, character: "CharacterDataClass") -> "CharacterDataClass":
     print(book)
-    print(character.name)
+    print("create char char id:", character.id)
 
     found_character = character_models.Character.characters.filter(name=character.name)
 
     if found_character:
         print("found a character!", found_character)
-        # create_character = character_models.Character.characters.create(
-        #     name=character.name,
-        #     appearance=character.appearance,
-        #     locations=character.locations,
-        #     associates=character.associates,
-        #     position=character.position,
-        #     knowledge=character.knowledge,
-        # )
+        create_character = character_models.Character.characters.create(
+            name=character.name,
+            appearance=character.appearance,
+            locations=character.locations,
+            associates=character.associates,
+            position=character.position,
+            knowledge=character.knowledge,
+        )
 
+        create_character.books.add(book)
         
     else: 
         print("no char found")
@@ -91,10 +92,10 @@ def create_character(book, character: "CharacterDataClass") -> "CharacterDataCla
 
 def delete_character(user, character_id):
     character = get_object_or_404(character_models.Character, pk=character_id)
-    print(character.book.user.id)
+    # print(character.books.user.id)
 
-    if user.id != character.book.user.id:
-        raise exceptions.PermissionDenied("You're not the user")
+    # if user.id != character.books.user.id:
+    #     raise exceptions.PermissionDenied("You're not the user")
 
     character.delete()
     pass
@@ -102,8 +103,8 @@ def delete_character(user, character_id):
 def udpate_character(user, character_id, character_data):
     character = get_object_or_404(character_models.Character, pk=character_id)
 
-    if user.id != character.book.user.id:
-        raise exceptions.PermissionDenied("You're not the user")
+    # if user.id != character.book.user.id:
+    #     raise exceptions.PermissionDenied("You're not the user")
     
     character.name = character_data.name
     character.appearance = character_data.appearance
@@ -113,7 +114,7 @@ def udpate_character(user, character_id, character_data):
     character.knowledge = character_data.knowledge
     character.created_at = character.created_at
     character.id = character_id
-    character.book = character.book
+    # character.books = character.books
     print(character)
     character.save()
     

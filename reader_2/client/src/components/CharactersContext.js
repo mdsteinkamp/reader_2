@@ -6,6 +6,8 @@ const CharactersContext = createContext()
 function CharactersProvider({ children }) {
     const [characters, setCharacters] = useState([])
 
+    console.log("user chars:", characters)
+
     useEffect(() => {
         fetch("/api/characters/", {
             method: "GET",

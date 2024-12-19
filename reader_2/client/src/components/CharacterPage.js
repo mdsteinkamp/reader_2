@@ -52,8 +52,8 @@ export default function CharacterPage({ state, onDeleteCharacter, onUpdateCharac
         })
     }, [location])
 
-    console.log(character)
-    console.log(errors, renderErrors)
+    // console.log(character)
+    // console.log(errors, renderErrors)
 
 
     if (!user, !character) return <h1>Please log in!</h1>
