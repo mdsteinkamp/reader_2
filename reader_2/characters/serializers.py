@@ -5,7 +5,7 @@ from rest_framework import serializers
 from . import services
 
 class CharacterSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
+    id = serializers.IntegerField(required=False)
     name = serializers.CharField()
     appearance = serializers.CharField()
     locations = serializers.CharField()

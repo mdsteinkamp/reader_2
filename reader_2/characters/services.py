@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 
 from books import services as book_services
 from . import models as character_models
+from . import serializers as character_serializers
 
 if TYPE_CHECKING:
     from models import Character
@@ -56,12 +57,38 @@ def get_book_character_detail(character_id: int) -> "CharacterDataClass":
 
 def create_character(book, character: "CharacterDataClass") -> "CharacterDataClass":
     print(book)
-    print("create char char id:", character.id)
+    print("create char char id:", character)
 
-    found_character = character_models.Character.characters.filter(name=character.name)
+    found_character = character_models.Character.characters.get(id=character.id)
+    serialized_found_character = character_serializers.CharacterSerializer(found_character)
 
     if found_character:
-        print("found a character!", found_character)
+        print("found a character! id number", found_character.id)
+        added_character = character_models.Character(
+            name=character.name,
+            appearance=character.appearance,
+            locations=character.locations,
+            associates=character.associates,
+            position=character.position,
+            knowledge=character.knowledge
+        )
+        # create_character = character_models.Character.characters.create(
+        #     name=character.name,
+        #     appearance=character.appearance,
+        #     locations=character.locations,
+        #     associates=character.associates,
+        #     position=character.position,
+        #     knowledge=character.knowledge,
+        # )
+        # create_character.save()
+
+        found_character.books.add(book)
+
+        # return CharacterDataClass.from_instance(character_model=create_character)
+        
+    else: 
+        print("no char found")
+
         create_character = character_models.Character.characters.create(
             name=character.name,
             appearance=character.appearance,
@@ -69,26 +96,12 @@ def create_character(book, character: "CharacterDataClass") -> "CharacterDataCla
             associates=character.associates,
             position=character.position,
             knowledge=character.knowledge,
+            # book=book["id"],
         )
 
         create_character.books.add(book)
-        
-    else: 
-        print("no char found")
 
-    create_character = character_models.Character.characters.create(
-        name=character.name,
-        appearance=character.appearance,
-        locations=character.locations,
-        associates=character.associates,
-        position=character.position,
-        knowledge=character.knowledge,
-        # book=book["id"],
-    )
-
-    create_character.books.add(book)
-
-    return CharacterDataClass.from_instance(character_model=create_character)
+        return CharacterDataClass.from_instance(character_model=create_character)
 
 def delete_character(user, character_id):
     character = get_object_or_404(character_models.Character, pk=character_id)

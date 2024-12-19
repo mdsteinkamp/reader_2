@@ -88,8 +88,11 @@ export default function AddCharacter({ state, onAddCharacter }) {
         associates: char.associates,
         position: char.position,
         knowledge: char.knowledge,
+        id: char.id
       })
     }
+
+    console.log(formData)
     
     return (
         <div>

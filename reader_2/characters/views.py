@@ -26,11 +26,12 @@ class CharacterCreateListApi(views.APIView):
     permission_classes = (authentication.CustomUserAuthentication,)
 
     def post(self, request):
-        print("in char view", request.data["book"])
+        print("in char view", request.data)
         serializer = character_serializer.CharacterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         
         data = serializer.validated_data
+        print("post serialized data", data)
 
         serializer.instance = services.create_character(request.data["book"]["id"],character=data)
 
