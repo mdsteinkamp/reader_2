@@ -6,7 +6,7 @@ class Character(models.Model):
     books= models.ManyToManyField(
         book_model.Book,
         # on_delete=models.CASCADE,
-        verbose_name="book", 
+        verbose_name="books", 
         related_name="characters"
     )
 

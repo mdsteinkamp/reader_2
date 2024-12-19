@@ -32,7 +32,7 @@ export default function Login({ onAddBooks }) {
         })
         .then((resp) => {
           if (resp.ok) {
-            console.log((Array.from(resp.headers.entries())))
+            // console.log((Array.from(resp.headers.entries())))
             const tokenArray = Array.from(resp.headers.entries().filter(h => h[0] === "jwt"))
             setToken((Array.from(resp.headers.entries().filter(h => h[0] === "jwt")))[0][1])
             // localStorage.setItem("token", tokenArray.pop()[1])

@@ -21,7 +21,7 @@ class CharacterDataClass:
     position: str
     knowledge: str
     created_at: datetime.datetime = None
-    book: book_services.BookDataClass = None
+    books: book_services.BookDataClass = None
     id: int = None
 
     @classmethod
@@ -35,11 +35,11 @@ class CharacterDataClass:
             knowledge=character_model.knowledge,
             created_at=character_model.created_at,
             id=character_model.id,
-            book=character_model.book
+            books=character_model.books.all()
         )
     
 def get_user_characters(user):
-    characters = character_models.Character.characters.filter(book__user=user)
+    characters = character_models.Character.characters.filter(books__user=user)
 
     return [CharacterDataClass.from_instance(character) for character in characters]
 
@@ -62,6 +62,16 @@ def create_character(book, character: "CharacterDataClass") -> "CharacterDataCla
 
     if found_character:
         print("found a character!", found_character)
+        # create_character = character_models.Character.characters.create(
+        #     name=character.name,
+        #     appearance=character.appearance,
+        #     locations=character.locations,
+        #     associates=character.associates,
+        #     position=character.position,
+        #     knowledge=character.knowledge,
+        # )
+
+        
     else: 
         print("no char found")
 
@@ -72,8 +82,10 @@ def create_character(book, character: "CharacterDataClass") -> "CharacterDataCla
         associates=character.associates,
         position=character.position,
         knowledge=character.knowledge,
-        book_id=book["id"],
+        # book=book["id"],
     )
+
+    create_character.books.add(book)
 
     return CharacterDataClass.from_instance(character_model=create_character)
 
