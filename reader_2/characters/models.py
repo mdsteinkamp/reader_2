@@ -3,9 +3,9 @@ from django.db import models
 from books import models as book_model
 
 class Character(models.Model):
-    book= models.ForeignKey(
+    books= models.ManyToManyField(
         book_model.Book,
-        on_delete=models.CASCADE,
+        # on_delete=models.CASCADE,
         verbose_name="book", 
         related_name="characters"
     )
